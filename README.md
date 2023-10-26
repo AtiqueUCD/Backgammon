@@ -1,5 +1,7 @@
 Backgammon game
-Developers :-
-    Atique Shaikh
-    Emile Aydar
-    Sangharsh Patil
+Developers :
+\begin{itemize}
+    \Atique Shaikh
+    \Emile Aydar
+    \Sangharsh Patil
+\end{itemize}
