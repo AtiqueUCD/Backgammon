@@ -1,5 +1,5 @@
 Backgammon game
 Developers :-
     Atique Shaikh
-    Emile
-    Sangharsh
+    Emile Aydar
+    Sangharsh Patil
