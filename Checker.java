@@ -11,6 +11,8 @@ public class Checker {
     public static final String OBar = "ON_BAR";
     public static final String OFF = "OFF_BOARD";
 
+    private final static int TOTAL_SPIKES = 24;
+
     public Checker(String color, int position, String status) {
         this.color = color;
         this.position = position;
@@ -27,6 +29,15 @@ public class Checker {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public void moveChecker(int steps)
+    {
+        int position = getPosition() + steps;
+        if(position <= TOTAL_SPIKES)
+        {
+            setPosition(position);
+        }
     }
 
     public String getStatus() {
