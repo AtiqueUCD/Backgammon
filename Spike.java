@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Spike {
     
-    private ArrayList<Checker> SpikeList = new ArrayList<>();
+    public ArrayList<Checker> SpikeList = new ArrayList<>();
 
     public void insertChecker(Checker checker)
     {
-        //SpikeList.add(checker);
+        SpikeList.add(checker);
     }
 }

@@ -14,7 +14,8 @@ public class Board extends Spike{
 
     Spike[] spikes = new Spike[TOTAL_NUMBER_OF_SPIKES];
     int tempIndex = 0;
-    boolean color = false;
+    // boolean color = false;
+    String color = Checker.BLACK;
 
     /*
      * 2-D array of spikes
@@ -40,7 +41,7 @@ public class Board extends Spike{
                 case SPIKE_TWENTY_FOUR:
                     /*Add two checkers */
                     tempIndex = 2;
-                    color = true;
+                    color = Checker.RED;//RED
                 break;
 
                 case SPIKE_SIX:
@@ -53,7 +54,7 @@ public class Board extends Spike{
                 case SPIKE_NINETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
-                    color = true;
+                    color = Checker.RED;;
                 break;
 
                 case SPIKE_EIGHT:
@@ -64,20 +65,19 @@ public class Board extends Spike{
                 case SPIKE_SEVENTEEN:
                     /*Add three checkers */
                     tempIndex = 3;
-                    color = true;
+                    color = Checker.RED;
                 break;
 
                 default:
                 break;
             }
-
             /*
              * Add checkers to the spike array
              */
             for(int checkers = 0; checkers < tempIndex; checkers++)
             {
-                spikes[spike].insertChecker(new Checker());//color, spike));
-                arrayOfSpikes.add(spikes);
+                spikes[spike].insertChecker(new Checker(color, spike));
+                // arrayOfSpikes.add(spikes);
             }
             
         }

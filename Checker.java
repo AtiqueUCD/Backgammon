@@ -20,6 +20,12 @@ public class Checker {
         this.status = status;
     }
 
+    public Checker(String color, int position) {
+        this.color = color;
+        this.position = position;
+        status = ON;
+    }
+
     public String getColor() {
         return color;
     }
@@ -54,11 +60,4 @@ public class Checker {
         return "Checker [Color: " + color + ", Position: " + position + " status: " + status + "]";
     }
 
-    public static void main(String[] args) {
-        Checker redChecker = new Checker("Red", 3, ON);
-        System.out.println(redChecker);
-
-        Checker blackChecker = new Checker("BLACK", 6, OFF);
-        System.out.println(blackChecker);
-    }
 }
