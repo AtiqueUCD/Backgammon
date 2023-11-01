@@ -4,10 +4,6 @@ public class Dice {
 
     static Random random = new Random();
 
-    // public Dice() {
-    //     random = new Random();
-    // }
-
     public static int[] roll() {
 
         int[] diceValues = new int[2];

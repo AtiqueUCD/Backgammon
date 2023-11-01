@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Presenter{
 
@@ -87,6 +87,9 @@ public class Presenter{
         System.out.println("24   OFF");
     }
 
+    /*
+     * To be modified
+     */
     public static void viewSpike(Board boardObj, int spikePosition)
     {
         // System.out.println(boardObj.getSpike(spikePosition));
@@ -99,17 +102,17 @@ public class Presenter{
         System.out.println("Player 2 : " + player_two.getName());
     }
 
-    private static void displayCommandPrompt()
+    public static void displayCommandPrompt()
     {
-        System.out.println("Enter your command here: ");
+        System.out.print("Enter your command here: ");
     }
     public static void displayPlayArea(Player player_one, Player player_two)
     {
         displayPlayerDetails(player_one,player_two);
         viewBoard();
-        displayCommandPrompt();
     }
 
+    /*Not in use */
     public static void startGame(Player player_one, Player player_two)
     {
         try (Scanner in = new Scanner(System.in)) {
@@ -118,5 +121,6 @@ public class Presenter{
             System.out.print("Enter the second player name : ");
             player_two.setName(in.nextLine());
         }
+        
     }
 }
