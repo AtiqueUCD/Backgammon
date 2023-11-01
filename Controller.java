@@ -3,6 +3,7 @@ public class Controller {
     {
         Board newBoard = new Board();
         newBoard.initializeBoard();
-        // Presenter.viewSpike(newBoard, 1);
+        Presenter.viewSpike(newBoard, 1);
+        // Presenter.viewBoard();
     }
 }

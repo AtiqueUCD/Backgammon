@@ -76,7 +76,7 @@ public class Board extends Spike{
              */
             for(int checkers = 0; checkers < tempIndex; checkers++)
             {
-                spikes[spike].insertChecker(new Checker(color, spike));
+                // spikes[spike].insertChecker(new Checker(color, spike));
                 // arrayOfSpikes.add(spikes);
             }
             

@@ -6,9 +6,9 @@ public class test {
         HIGH
     }
 
-    public static void main(String[] args) {
-        Level myVar = Level.MEDIUM;
-        System.out.println(myVar);
-    }
+    // public static void main(String[] args) {
+    //     Level myVar = Level.MEDIUM;
+    //     System.out.println(myVar);
+    // }
 
 }
