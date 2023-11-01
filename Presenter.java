@@ -24,7 +24,7 @@ public class Presenter{
         {
             System.out.print("\t");
         }
-        System.out.println("1");
+        System.out.println("1    OFF");
 
         /*This is for the top of the board with spikes */
         for(int i = 1; i <= 12; i++)
@@ -82,12 +82,29 @@ public class Presenter{
         {
             System.out.print("\t");
         }
-        System.out.println("24");
+        System.out.println("24   OFF");
     }
 
     public static void viewSpike(Board boardObj, int spikePosition)
     {
         // System.out.println(boardObj.getSpike(spikePosition));
+        // viewBoard();
+    }
+
+    private static void displayPlayerDetails(/*Args as from the player class */)
+    {
+        System.out.println("Player 1 : Jimmy");
+        System.out.println("Player 2 : Jane");
+    }
+
+    private static void displayCommandPrompt()
+    {
+        System.out.println("Enter your command here: ");
+    }
+    public static void displayPlayArea()
+    {
+        displayPlayerDetails();
         viewBoard();
+        displayCommandPrompt();
     }
 }
