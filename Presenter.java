@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Presenter{
 
     private static void outine()
@@ -91,20 +93,30 @@ public class Presenter{
         // viewBoard();
     }
 
-    private static void displayPlayerDetails(/*Args as from the player class */)
+    private static void displayPlayerDetails(Player player_one, Player player_two)
     {
-        System.out.println("Player 1 : Jimmy");
-        System.out.println("Player 2 : Jane");
+        System.out.println("Player 1 : " + player_one.getName());
+        System.out.println("Player 2 : " + player_two.getName());
     }
 
     private static void displayCommandPrompt()
     {
         System.out.println("Enter your command here: ");
     }
-    public static void displayPlayArea()
+    public static void displayPlayArea(Player player_one, Player player_two)
     {
-        displayPlayerDetails();
+        displayPlayerDetails(player_one,player_two);
         viewBoard();
         displayCommandPrompt();
+    }
+
+    public static void startGame(Player player_one, Player player_two)
+    {
+        Scanner in = new Scanner(System.in);
+
+        System.out.print("Enter the first player name : ");
+        player_one.setName(in.nextLine());
+        System.out.print("Enter the second player name : ");
+        player_two.setName(in.nextLine());
     }
 }
