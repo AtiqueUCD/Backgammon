@@ -9,5 +9,10 @@ public class Controller {
         // Presenter.viewBoard();
         Presenter.startGame(playerOne, playerTwo);
         Presenter.displayPlayArea(playerOne,playerTwo);
+        Command.acceptCommand();
+        int[] temp = new int[2];
+        temp = Command.getDiceRoll();
+        System.out.println(temp[0]);
+        System.out.println(temp[1]);
     }
 }

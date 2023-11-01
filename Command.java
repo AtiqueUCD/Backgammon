@@ -1,20 +1,28 @@
-public class Command {
+import java.util.Scanner;
+
+public class Command extends Dice{
     
-    int[] diceRoll = new int[2];
+    static int[] diceRoll = new int[2];
 
-    void acceptCommand(String command)
+    public static void acceptCommand()
     {
-        switch(command)
-        {
-            case "R":
-            case "r":
-                /*Roll dice */
-
-            break;
+        try (Scanner in = new Scanner(System.in)) {
+            System.out.print("Enter a command (R to roll the dice): ");
+            String command = in.nextLine();
+            
+            switch (command.toLowerCase()) {
+                case "r":
+                    /* Roll the dice */
+                    diceRoll = roll();
+                    break;
+                default:
+                    System.out.println("Invalid command. Please enter 'R' to roll the dice.");
+                    break;
+            }
         }
     }
 
-    int[] getDiceRoll()
+    public static int[] getDiceRoll()
     {
         return diceRoll;
     }
