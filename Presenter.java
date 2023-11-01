@@ -4,18 +4,28 @@ public class Presenter{
     {
         System.out.print("---");
     }
+
     private static void spikeOutline()
     {
         System.out.print("|");
     }
+
     private static void barOutline()
     {
-        // System.out.print("BAR");
         System.out.print("  BAR  ");
-        // System.out.print("  ****  ");
     }
+    
     public static void viewBoard()
     {
+
+        /*This is for the main board play area */
+        System.out.print("12");
+        for(int j = 0; j < 6;j++)
+        {
+            System.out.print("\t");
+        }
+        System.out.println("1");
+
         /*This is for the top of the board with spikes */
         for(int i = 1; i <= 12; i++)
         {
@@ -65,6 +75,14 @@ public class Presenter{
             }
 
         }
+        System.out.println();
+        /*This is for the main board play area */
+        System.out.print("13");
+        for(int j = 0; j < 6;j++)
+        {
+            System.out.print("\t");
+        }
+        System.out.println("24");
     }
 
     public static void viewSpike(Board boardObj, int spikePosition)
