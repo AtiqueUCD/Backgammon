@@ -112,11 +112,11 @@ public class Presenter{
 
     public static void startGame(Player player_one, Player player_two)
     {
-        Scanner in = new Scanner(System.in);
-
-        System.out.print("Enter the first player name : ");
-        player_one.setName(in.nextLine());
-        System.out.print("Enter the second player name : ");
-        player_two.setName(in.nextLine());
+        try (Scanner in = new Scanner(System.in)) {
+            System.out.print("Enter the first player name : ");
+            player_one.setName(in.nextLine());
+            System.out.print("Enter the second player name : ");
+            player_two.setName(in.nextLine());
+        }
     }
 }
