@@ -33,6 +33,7 @@ public class Presenter{
         {
             if(i%6==0 && i<12)
             {
+                spikeOutline();
                 barOutline();
             }else{
                 spikeOutline();
@@ -69,6 +70,7 @@ public class Presenter{
         {
             if(i%6==0 && i<12)
             {
+                spikeOutline();
                 barOutline();
             }else{
                 spikeOutline();
