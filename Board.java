@@ -3,31 +3,27 @@ import java.util.ArrayList;
 public class Board extends Spike{
 
     final static private int TOTAL_NUMBER_OF_SPIKES = 24;
-    final static private int SPIKE_ONE = 1;
-    final static private int SPIKE_SIX = 6;
-    final static private int SPIKE_EIGHT = 8;
-    final static private int SPIKE_TWELVE = 12;
-    final static private int SPIKE_THRETEEN = 13;
-    final static private int SPIKE_SEVENTEEN = 17;
-    final static private int SPIKE_NINETEEN = 19;
-    final static private int SPIKE_TWENTY_FOUR = 24;
+    final static private int SPIKE_ONE = 0;
+    final static private int SPIKE_SIX = 5;
+    final static private int SPIKE_EIGHT = 7;
+    final static private int SPIKE_TWELVE = 11;
+    final static private int SPIKE_THRETEEN = 12;
+    final static private int SPIKE_SEVENTEEN = 16;
+    final static private int SPIKE_NINETEEN = 18;
+    final static private int SPIKE_TWENTY_FOUR = 23;
 
-    Spike[] spikes = new Spike[TOTAL_NUMBER_OF_SPIKES];
+    ArrayList<Spike> spikes = new ArrayList<>();
     int tempIndex = 0;
-    // boolean color = false;
     String color = Checker.BLACK;
 
     /*
      * 2-D array of spikes
      */
-    // ArrayList<ArrayList<Spike>> arrayOfSpikes = new ArrayList<>();
     ArrayList<Spike[]> arrayOfSpikes = new ArrayList<>();
     
     private void initializeSpikes()
     {
-        // Spike[] spikes = new Spike[TOTAL_NUMBER_OF_SPIKES];
-        // int tempIndex = 0;
-        // boolean color = false;
+        int index = 0;
 
         for(int spike = 0; spike < TOTAL_NUMBER_OF_SPIKES; spike++)
         {
@@ -69,6 +65,7 @@ public class Board extends Spike{
                 break;
 
                 default:
+                    tempIndex = 0;
                 break;
             }
             /*
@@ -76,9 +73,9 @@ public class Board extends Spike{
              */
             for(int checkers = 0; checkers < tempIndex; checkers++)
             {
-                // spikes[spike].insertChecker(new Checker(color, spike));
-                // arrayOfSpikes.add(spikes);
-                spikes[spike].addChecker(new Checker(color, spike)); /*Bug here @Emile - have a look */
+                spikes.add((new Spike()));
+                spikes.get(index).addChecker(new Checker(color, spike));
+                index++;
             }
             
         }
