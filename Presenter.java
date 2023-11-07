@@ -114,6 +114,19 @@ public class Presenter{
         viewBoard();
     }
 
+    public static void displaySpikes(Board obj)
+    {
+        for(int i = 0; i<obj.getTotalNoOfSpikes(); i++)
+        {
+            for(int j = 0; j < obj.size(); j++)
+            {
+                if(!obj.getSpike(j).isEmpty())
+                    System.out.print(obj.getSpike(j).get(j) + " ");
+            }
+            System.out.println("");
+        }
+    }
+
     /*Not in use */
     public static void startGame(Player player_one, Player player_two)
     {

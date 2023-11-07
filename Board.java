@@ -23,7 +23,7 @@ public class Board extends Spike{
     
     private void initializeSpikes()
     {
-        int index = 0;
+        int index = -1;
 
         for(int spike = 0; spike < TOTAL_NUMBER_OF_SPIKES; spike++)
         {
@@ -32,36 +32,42 @@ public class Board extends Spike{
                 case SPIKE_ONE:
                     /*Add two checkers */
                     tempIndex = 2;
+                    index++;
                 break;
 
                 case SPIKE_TWENTY_FOUR:
                     /*Add two checkers */
                     tempIndex = 2;
                     color = Checker.RED;//RED
+                    index++;
                 break;
 
                 case SPIKE_SIX:
                 case SPIKE_THRETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
+                    index++;
                 break;
                 
                 case SPIKE_TWELVE:
                 case SPIKE_NINETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
-                    color = Checker.RED;;
+                    color = Checker.RED;
+                    index++;
                 break;
 
                 case SPIKE_EIGHT:
                     /*Add three checkers */
                     tempIndex = 3;
+                    index++;
                 break;
 
                 case SPIKE_SEVENTEEN:
                     /*Add three checkers */
                     tempIndex = 3;
                     color = Checker.RED;
+                    index++;
                 break;
 
                 default:
@@ -75,7 +81,6 @@ public class Board extends Spike{
             {
                 spikes.add((new Spike()));
                 spikes.get(index).addChecker(new Checker(color, spike));
-                index++;
             }
             
         }
@@ -91,8 +96,8 @@ public class Board extends Spike{
         return TOTAL_NUMBER_OF_SPIKES;
     }
 
-    public Spike[] getSpike(int spikePosition)
+    public Spike getSpike(int spikePosition)
     {
-        return arrayOfSpikes.get(spikePosition);
+        return spikes.get(spikePosition);
     }
 }

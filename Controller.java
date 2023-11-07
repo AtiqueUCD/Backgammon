@@ -9,6 +9,7 @@ public class Controller {
         newBoard.initializeBoard();
         // Presenter.viewSpike(newBoard, 1);
 
+        Presenter.displaySpikes(newBoard);
         Scanner in = new Scanner(System.in);
         System.out.print("Enter the first player name : ");
         playerOne.setName(in.nextLine());
