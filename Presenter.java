@@ -120,10 +120,11 @@ public class Presenter{
         {
             for(int j = 0; j < obj.size(); j++)
             {
-                if(!obj.getSpike(j).isEmpty())
-                    System.out.print(obj.getSpike(j).get(j) + " ");
+                // if(!obj.getSpike(j).isEmpty())
+                //     System.out.print(obj.getSpike(j).get(j) + " ");
+                obj.getCheckers(j);
             }
-            System.out.println("");
+            //System.out.println("");
         }
     }
 
