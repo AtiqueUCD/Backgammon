@@ -3,9 +3,10 @@ public class Checker {
     private String color; // Color of the checker
     private int position; // position on the game board
     private String status; // Status of the checker
+    private int ID; // ID of the checkers
 
-    public static final String RED = "\u001B[31m";
-    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m" + "\u25A0";
+    public static final String BLACK = "\u001B[30m" + "\u25A0";
     public static final String RESET = "\u001B[0m";
 
     public static final String ON = "ON_BOARD";
@@ -20,14 +21,20 @@ public class Checker {
         this.status = status;
     }
 
-    public Checker(String color, int position) {
+    public Checker(String color, int position, int ID) {
         this.color = color;
         this.position = position;
         status = ON;
+        this.ID = ID;
     }
 
+    public int getID()
+    {
+        return ID;
+    }
+    
     public String getColor() {
-        return color;
+        return (color) ;
     }
 
     public int getPosition() {

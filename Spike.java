@@ -58,5 +58,11 @@ public class Spike extends ArrayList<Checker>{
         return isDeleted;
     }
 
+    public Checker getCheckers(int position)
+    {
+        return this.getCheckers(position);
+    }
+
+
 
 }

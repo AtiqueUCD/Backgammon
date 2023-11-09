@@ -24,6 +24,7 @@ public class Board extends Spike{
     private void initializeSpikes()
     {
         int index = -1;
+        int ID = 0;
 
         for(int spike = 0; spike < TOTAL_NUMBER_OF_SPIKES; spike++)
         {
@@ -32,24 +33,38 @@ public class Board extends Spike{
                 case SPIKE_ONE:
                     /*Add two checkers */
                     tempIndex = 2;
+                    color = Checker.RED;//RED
                     index++;
                 break;
 
                 case SPIKE_TWENTY_FOUR:
                     /*Add two checkers */
                     tempIndex = 2;
-                    color = Checker.RED;//RED
+                    color = Checker.BLACK;//RED
                     index++;
                 break;
 
                 case SPIKE_SIX:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;//RED
+                    index++;
+                break;
+
                 case SPIKE_THRETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
+                    color = Checker.RED;//RED
                     index++;
                 break;
                 
                 case SPIKE_TWELVE:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;
+                    index++;
+                break;
+
                 case SPIKE_NINETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
@@ -60,13 +75,14 @@ public class Board extends Spike{
                 case SPIKE_EIGHT:
                     /*Add three checkers */
                     tempIndex = 3;
+                    color = Checker.RED;
                     index++;
                 break;
 
                 case SPIKE_SEVENTEEN:
                     /*Add three checkers */
                     tempIndex = 3;
-                    color = Checker.RED;
+                    color = Checker.BLACK;
                     index++;
                 break;
 
@@ -77,13 +93,27 @@ public class Board extends Spike{
             /*
              * Add checkers to the spike array
              */
-            for(int checkers = 0; checkers < tempIndex; checkers++)
+            if(tempIndex > 0)
             {
-                spikes.add((new Spike()));
-                spikes.get(index).addChecker(new Checker(color, spike));
+                System.out.println("New checkers no: " + tempIndex);
+                spikes.add(index,new Spike());
             }
             
+            for(int checkers = 0; checkers < tempIndex; checkers++,ID++)
+            {
+                System.out.println("index: "+ index);//debug
+                spikes.get(index).addChecker(new Checker(color, spike, ID));
+            }
+            System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
+            //Debug
+            // if(tempIndex > 0)
+            //     System.out.println(Integer.toString(index) + spikes.get(index).getID());
+            
         }
+        System.out.println("Total number of spikes:" + spikes.size());
+        System.out.println("No of checkers in 1st spike: "+ spikes.get(0).size());
+        System.out.println("No of checkers in 1st spike: "+ spikes.get(1).size());
+        System.out.println("No of checkers in 1st spike: "+ spikes.get(2).size());
     }
 
     public void initializeBoard()
