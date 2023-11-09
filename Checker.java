@@ -34,7 +34,7 @@ public class Checker {
     }
     
     public String getColor() {
-        return (color) ;
+        return (color+RESET);
     }
 
     public int getPosition() {
