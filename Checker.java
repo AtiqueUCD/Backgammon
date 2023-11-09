@@ -5,8 +5,8 @@ public class Checker {
     private String status; // Status of the checker
     private int ID; // ID of the checkers
 
-    public static final String RED = "\u001B[31m";
-    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m" + "\u25A0";
+    public static final String BLACK = "\u001B[30m" + "\u25A0";
     public static final String RESET = "\u001B[0m";
 
     public static final String ON = "ON_BOARD";
@@ -34,7 +34,7 @@ public class Checker {
     }
     
     public String getColor() {
-        return color;
+        return (color) ;
     }
 
     public int getPosition() {

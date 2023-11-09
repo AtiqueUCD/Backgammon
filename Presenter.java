@@ -116,15 +116,34 @@ public class Presenter{
 
     public static void displaySpikes(Board obj)
     {
-        for(int i = 0; i<obj.getTotalNoOfSpikes(); i++)
+        // for(int i = 0; i<obj.getTotalNoOfSpikes(); i++)
+        // {
+        //     for(int j = 0; j < obj.size(); j++)
+        //     {
+        //         // if(!obj.getSpike(j).isEmpty())
+        //         System.out.print(obj.getSpike(j).getPosition()+ " ");
+        //         // obj.getCheckers(j);
+        //     }
+        //     System.out.println("");
+        // }
+
+        for(int i = 0; i < 8; i++)
         {
-            for(int j = 0; j < obj.size(); j++)
-            {
+            // for(int j = 0; j < obj.size(); j++)
+            // {
                 // if(!obj.getSpike(j).isEmpty())
-                //     System.out.print(obj.getSpike(j).get(j) + " ");
-                obj.getCheckers(j);
+                // System.out.print("Size of the Checkers: " + obj.getSpike(i).size()+ " ");
+                // System.out.print("ID of the checkers: " + obj.getSpike(i).get(1).getID());
+                // System.out.println(" color of the checkers: " + obj.getSpike(i).get(1).toString());
+                // obj.getCheckers(j);
+            // }
+            int totalNoCheckers = obj.getSpike(i).size();
+            for(int j = 0; j < totalNoCheckers; j++)
+            {
+                //print the color
+                System.out.println(obj.getSpike(i).get(j).getColor() + Checker.RESET);
             }
-            //System.out.println("");
+            System.out.println("");
         }
     }
 

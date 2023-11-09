@@ -33,24 +33,38 @@ public class Board extends Spike{
                 case SPIKE_ONE:
                     /*Add two checkers */
                     tempIndex = 2;
+                    color = Checker.RED;//RED
                     index++;
                 break;
 
                 case SPIKE_TWENTY_FOUR:
                     /*Add two checkers */
                     tempIndex = 2;
-                    color = Checker.RED;//RED
+                    color = Checker.BLACK;//RED
                     index++;
                 break;
 
                 case SPIKE_SIX:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;//RED
+                    index++;
+                break;
+
                 case SPIKE_THRETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
+                    color = Checker.RED;//RED
                     index++;
                 break;
                 
                 case SPIKE_TWELVE:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;
+                    index++;
+                break;
+
                 case SPIKE_NINETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
@@ -61,13 +75,14 @@ public class Board extends Spike{
                 case SPIKE_EIGHT:
                     /*Add three checkers */
                     tempIndex = 3;
+                    color = Checker.RED;
                     index++;
                 break;
 
                 case SPIKE_SEVENTEEN:
                     /*Add three checkers */
                     tempIndex = 3;
-                    color = Checker.RED;
+                    color = Checker.BLACK;
                     index++;
                 break;
 
