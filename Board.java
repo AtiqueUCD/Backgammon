@@ -94,28 +94,18 @@ public class Board extends Spike{
             }
             /*
              * Add checkers to the spike array
-             */
-            // if(tempIndex > 0)
-            // {
-            //     //System.out.println("New checkers no: " + tempIndex); //Debug
-            //     spikes.add(index,new Spike());
-            // }else{
-            //     spikes.add(index,new Spike());
-            // }
-            
+             */            
             spikes.add(spike,new Spike());
-            System.out.print("Spike no: " + spike + " ");
+            //System.out.print("Spike no: " + spike + " ");//debug
+            
             for(int checkers = 0; checkers < tempIndex; checkers++,ID++)
             {
-                //System.out.println("index: "+ index);//debug
                 spikes.get(spike).addChecker(new Checker(color, spike, ID));
-                System.out.print("A ");
+                //System.out.print("A ");//debug
             }
             //Debug
-            // System.out.print("Spike no: " + spike + "");
-            System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
-            // if(tempIndex > 0)
-            //     System.out.println(Integer.toString(index) + spikes.get(index).getID());
+            //System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
+
             
         }
         //Debug
