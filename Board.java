@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.lang.model.type.NullType;
+
 public class Board extends Spike{
 
     final static private int TOTAL_NUMBER_OF_SPIKES = 24;
@@ -93,19 +95,25 @@ public class Board extends Spike{
             /*
              * Add checkers to the spike array
              */
-            if(tempIndex > 0)
-            {
-                //System.out.println("New checkers no: " + tempIndex); //Debug
-                spikes.add(index,new Spike());
-            }
+            // if(tempIndex > 0)
+            // {
+            //     //System.out.println("New checkers no: " + tempIndex); //Debug
+            //     spikes.add(index,new Spike());
+            // }else{
+            //     spikes.add(index,new Spike());
+            // }
             
+            spikes.add(spike,new Spike());
+            System.out.print("Spike no: " + spike + " ");
             for(int checkers = 0; checkers < tempIndex; checkers++,ID++)
             {
                 //System.out.println("index: "+ index);//debug
-                spikes.get(index).addChecker(new Checker(color, spike, ID));
+                spikes.get(spike).addChecker(new Checker(color, spike, ID));
+                System.out.print("A ");
             }
             //Debug
-            // System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
+            // System.out.print("Spike no: " + spike + "");
+            System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
             // if(tempIndex > 0)
             //     System.out.println(Integer.toString(index) + spikes.get(index).getID());
             
