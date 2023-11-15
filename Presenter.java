@@ -108,10 +108,11 @@ public class Presenter{
     {
         System.out.print("Please enter 'R/r' to roll the dice or 'Q/q' to Quit: ");
     }
-    public static void displayPlayArea(Player player_one, Player player_two)
+    public static void displayPlayArea(Board boardObj, Player player_one, Player player_two)
     {
         displayPlayerDetails(player_one,player_two);
-        viewBoard();
+        // viewBoard();
+        displaySpikes(boardObj);
     }
 
     public static void displaySpikes(Board obj)

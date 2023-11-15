@@ -34,7 +34,7 @@ public class Controller {
             playerTwo.setName(inputString);
 
             //Displays the play board
-            Presenter.displayPlayArea(playerOne,playerTwo);
+            Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
             Presenter.displayCommandPrompt();
             String command = in.nextLine();
 
@@ -49,7 +49,7 @@ public class Controller {
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
                 System.out.println("2nd Dice: " + temp[1]);
-                Presenter.displayPlayArea(playerOne,playerTwo);
+                Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
                 Presenter.displayCommandPrompt();
                 command = in.nextLine();
                 //toggle the turn
