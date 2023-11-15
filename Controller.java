@@ -1,8 +1,11 @@
 import java.util.*;
 
 public class Controller {
+    private static boolean playerTurn;//if false turn for red, if ture then turn for black
     public static void main(String[] args)
     {
+        
+
         Board newBoard = new Board();
         Player playerOne = new Player("Player 1");
         Player playerTwo = new Player("Player 2");
@@ -49,6 +52,8 @@ public class Controller {
                 Presenter.displayPlayArea(playerOne,playerTwo);
                 Presenter.displayCommandPrompt();
                 command = in.nextLine();
+                //toggle the turn
+                System.out.println("Turn for: " + getTurn());
             }
         }
 
@@ -64,5 +69,11 @@ public class Controller {
             return false;
         }
         return returnState;
+    }
+
+    public static boolean getTurn()
+    {
+        playerTurn = playerTurn == false ? true : false;
+        return playerTurn;
     }
 }
