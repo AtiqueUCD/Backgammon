@@ -37,16 +37,11 @@ public class Command extends Dice{
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) {
         String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
         ArrayList<int[]> moveList = new ArrayList<>();
-        // ArrayList<int> CurrentTurnSpikeList = new ArrayList<>();
 
-
-        //for (Spike spike : board.getSpike().getTotalNoOfSpikes()) {
         for(int indexSpike = 0; indexSpike < 26; indexSpike++)
         {
             Spike temp = new Spike();
             temp = board.getSpike(indexSpike);
-            //debug
-            // System.out.println(indexSpike + ". " + temp.size());
 
             if(!temp.isEmpty())
             {
@@ -54,23 +49,12 @@ public class Command extends Dice{
                 int indexCheckers = temp.size() - 1;
                 if(playerColor.equals(temp.getCheckers(indexCheckers).getColor()))
                 {
-                    System.out.println("Spike no: " + indexSpike + " " + playerColor);
-                    // CurrentTurnSpikeList.add(indexCheckers);
                     int source = temp.getCheckers(indexCheckers).getPosition();
                     checkAndAddMove(moveList, source, nd1, board, playerColor);
                     checkAndAddMove(moveList, source, nd2, board, playerColor);
                     checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
                 }
             }
-
-            // if (!temp.isEmpty() && temp.get(temp.size() - 1).getColor().equals(playerColor)) //bug
-            // {
-            //     int source = temp.getPosition();
-
-                // checkAndAddMove(moveList, source, nd1, board, playerColor);
-                // checkAndAddMove(moveList, source, nd2, board, playerColor);
-                // checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
-            // }
         }
 
         printMoves(moveList);
@@ -95,7 +79,6 @@ public class Command extends Dice{
 
     static private void printMoves(List<int[]> moveList) {
         for (int[] move : moveList) {
-            System.out.println("Checker " + move[0] + ":");
             System.out.println("Move possible from " + move[0] + " to " + move[1]);
         }
     }
