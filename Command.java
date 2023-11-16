@@ -64,6 +64,12 @@ public class Command extends Dice{
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor) {
         int dest = source + steps;
+        
+        //need to skip the index for the bar
+        if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
+        {
+            dest += 1;
+        }
         if (isValidMove(dest, board, playerColor)) {
             moveList.add(new int[] {source, dest});
         }
