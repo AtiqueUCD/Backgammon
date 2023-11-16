@@ -44,7 +44,7 @@ public class Controller {
             */
             while(!(command.equals("Q") || command.equals("q")))
             {
-                Command.acceptCommand(command);
+                Command.acceptCommand(command,newBoard);
                 int[] temp = new int[2];
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
@@ -74,6 +74,11 @@ public class Controller {
     public static boolean getTurn()
     {
         playerTurn = playerTurn == false ? true : false;
+        return playerTurn;
+    }
+
+    public static boolean getTurn_()
+    {
         return playerTurn;
     }
 }
