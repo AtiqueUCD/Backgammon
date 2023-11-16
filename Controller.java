@@ -5,11 +5,11 @@ public class Controller {
     public static void main(String[] args)
     {
         
-
         Board newBoard = new Board();
         Player playerOne = new Player("Player 1");
         Player playerTwo = new Player("Player 2");
         newBoard.initializeBoard();
+        Turn playersTurn = new Turn();
 
         Presenter.displaySpikes(newBoard);
         Scanner in = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class Controller {
             */
             while(!(command.equals("Q") || command.equals("q")))
             {
-                Command.acceptCommand(command,newBoard);
+                Command.acceptCommand(command,newBoard, playersTurn);
                 int[] temp = new int[2];
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
@@ -53,7 +53,7 @@ public class Controller {
                 Presenter.displayCommandPrompt();
                 command = in.nextLine();
                 //toggle the turn
-                System.out.println("Turn for: " + getTurn());
+                // System.out.println("Turn for: " + getTurn());
             }
         }
 
@@ -77,7 +77,7 @@ public class Controller {
         return playerTurn;
     }
 
-    public static boolean getTurn_()
+    public boolean getTurn_()
     {
         return playerTurn;
     }

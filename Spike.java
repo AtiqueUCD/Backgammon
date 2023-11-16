@@ -60,7 +60,7 @@ public class Spike extends ArrayList<Checker>{
 
     public Checker getCheckers(int position)
     {
-        return this.getCheckers(position);
+        return this.get(position);
     }
 
 
