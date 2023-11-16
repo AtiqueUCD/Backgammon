@@ -22,7 +22,7 @@ public class Controller {
                 //Exit the program
                 break EXIT_PROGRAM;
             }
-            playerOne.setName(inputString);
+            playerOne.setName(inputString + " "+ Checker.RED);
             System.out.print("Enter the second player name : ");
             inputString = in.nextLine();
             if(!checkQuitCommand(inputString))
@@ -30,7 +30,7 @@ public class Controller {
                 //Exit program
                 break EXIT_PROGRAM;
             }
-            playerTwo.setName(inputString);
+            playerTwo.setName(inputString + " " + Checker.BLACK);
 
             //Displays the play board
             Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
@@ -43,7 +43,7 @@ public class Controller {
             */
             while(!(command.equals("Q") || command.equals("q")))
             {
-                Command.acceptCommand(command,newBoard, playersTurn);
+                Command.acceptCommand(command,newBoard, playersTurn, playerOne, playerTwo);
                 int[] temp = new int[2];
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);

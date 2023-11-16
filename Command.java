@@ -4,7 +4,7 @@ public class Command extends Dice{
     
     static int[] diceRoll = new int[2];
 
-    public static void acceptCommand(String command, Board boardObj, Turn turnObj)
+    public static void acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
         switch (command.toLowerCase()) {
             case "r":
@@ -12,7 +12,8 @@ public class Command extends Dice{
                 diceRoll = roll();
                 //Show possible moves
                 prediction(diceRoll[0],diceRoll[1],turnObj.getTurn(),boardObj);
-                turnObj.toggleTurn();
+                turnObj.toggleTurn(playerOne,playerTwo);
+                turnObj.displayTurn(playerOne, playerTwo);
                 // printMoves(moveList);
                 break;
             case "hint":
@@ -34,7 +35,8 @@ public class Command extends Dice{
         return diceRoll;
     }
 
-    static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) {
+    static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) 
+    {
         String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
         ArrayList<int[]> moveList = new ArrayList<>();
 
