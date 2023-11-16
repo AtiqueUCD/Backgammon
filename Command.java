@@ -4,15 +4,15 @@ public class Command extends Dice{
     
     static int[] diceRoll = new int[2];
 
-    public static void acceptCommand(String command, Board boardObj)
+    public static void acceptCommand(String command, Board boardObj, Turn turnObj)
     {
-        ArrayList<int[]> moveList = new ArrayList<>();
         switch (command.toLowerCase()) {
             case "r":
                 /* Roll the dice */
                 diceRoll = roll();
                 //Show possible moves
-                prediction(diceRoll[0],diceRoll[1],Controller.getTurn_(),boardObj);
+                prediction(diceRoll[0],diceRoll[1],turnObj.getTurn(),boardObj);
+                turnObj.toggleTurn();
                 // printMoves(moveList);
                 break;
             case "hint":
@@ -35,8 +35,10 @@ public class Command extends Dice{
     }
 
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) {
-        String playerColor = turnPlayer ? Checker.BLACK : Checker.RED;
+        String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
         ArrayList<int[]> moveList = new ArrayList<>();
+        // ArrayList<int> CurrentTurnSpikeList = new ArrayList<>();
+
 
         //for (Spike spike : board.getSpike().getTotalNoOfSpikes()) {
         for(int indexSpike = 0; indexSpike < 26; indexSpike++)
@@ -44,15 +46,31 @@ public class Command extends Dice{
             Spike temp = new Spike();
             temp = board.getSpike(indexSpike);
             //debug
-            System.out.println(indexSpike + ". " + temp.size());
-            if (!temp.isEmpty() && temp.get(temp.size() - 1).getColor().equals(playerColor)) //bug
-            {
-                int source = temp.getPosition();
+            // System.out.println(indexSpike + ". " + temp.size());
 
-                checkAndAddMove(moveList, source, nd1, board, playerColor);
-                checkAndAddMove(moveList, source, nd2, board, playerColor);
-                checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+            if(!temp.isEmpty())
+            {
+
+                int indexCheckers = temp.size() - 1;
+                if(playerColor.equals(temp.getCheckers(indexCheckers).getColor()))
+                {
+                    System.out.println("Spike no: " + indexSpike + " " + playerColor);
+                    // CurrentTurnSpikeList.add(indexCheckers);
+                    int source = temp.getCheckers(indexCheckers).getPosition();
+                    checkAndAddMove(moveList, source, nd1, board, playerColor);
+                    checkAndAddMove(moveList, source, nd2, board, playerColor);
+                    checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+                }
             }
+
+            // if (!temp.isEmpty() && temp.get(temp.size() - 1).getColor().equals(playerColor)) //bug
+            // {
+            //     int source = temp.getPosition();
+
+                // checkAndAddMove(moveList, source, nd1, board, playerColor);
+                // checkAndAddMove(moveList, source, nd2, board, playerColor);
+                // checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+            // }
         }
 
         printMoves(moveList);
