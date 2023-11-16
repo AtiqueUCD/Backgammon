@@ -37,6 +37,8 @@ public class Command extends Dice{
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) {
         String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
         ArrayList<int[]> moveList = new ArrayList<>();
+        // ArrayList<int> CurrentTurnSpikeList = new ArrayList<>();
+
 
         //for (Spike spike : board.getSpike().getTotalNoOfSpikes()) {
         for(int indexSpike = 0; indexSpike < 26; indexSpike++)
@@ -46,15 +48,18 @@ public class Command extends Dice{
             //debug
             // System.out.println(indexSpike + ". " + temp.size());
 
-            if(!temp.isEmpty())// && temp.getCheckers(temp.size()-1).getColor().equals(playerColor))
+            if(!temp.isEmpty())
             {
-                // System.out.println(temp.getCheckers(temp.size()-1).getColor());
-                // System.out.println(temp.size());
+
                 int indexCheckers = temp.size() - 1;
-                // System.out.println(temp.getCheckers(indexCheckers).getColor());
                 if(playerColor.equals(temp.getCheckers(indexCheckers).getColor()))
                 {
                     System.out.println("Spike no: " + indexSpike + " " + playerColor);
+                    // CurrentTurnSpikeList.add(indexCheckers);
+                    int source = temp.getCheckers(indexCheckers).getPosition();
+                    checkAndAddMove(moveList, source, nd1, board, playerColor);
+                    checkAndAddMove(moveList, source, nd2, board, playerColor);
+                    checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
                 }
             }
 
@@ -62,9 +67,9 @@ public class Command extends Dice{
             // {
             //     int source = temp.getPosition();
 
-            //     checkAndAddMove(moveList, source, nd1, board, playerColor);
-            //     checkAndAddMove(moveList, source, nd2, board, playerColor);
-            //     checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+                // checkAndAddMove(moveList, source, nd1, board, playerColor);
+                // checkAndAddMove(moveList, source, nd2, board, playerColor);
+                // checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
             // }
         }
 
