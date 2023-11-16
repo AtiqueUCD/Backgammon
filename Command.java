@@ -1,4 +1,6 @@
+import java.util.List;
 import java.util.Scanner;
+import java.util.*;
 
 public class Command extends Dice{
     
@@ -32,11 +34,15 @@ public class Command extends Dice{
 
     public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) {
         String playerColor = turnPlayer ? Checker.BLACK : Checker.RED;
-        List<int[]> moveList = new ArrayList<>();
+        ArrayList<int[]> moveList = new ArrayList<>();
 
-        for (Spike spike : board.getSpikes()) {
-            if (!spike.isEmpty() && spike.get(spike.size() - 1).getColor().equals(playerColor)) {
-                int source = spike.getPosition();
+        //for (Spike spike : board.getSpike().getTotalNoOfSpikes()) {
+        for(int indexSpike = 0; indexSpike < 26; indexSpike++)
+        {
+            Spike temp = new Spike();
+            temp = board.getSpike(indexSpike);
+            if (!temp.isEmpty() && temp.get(temp.size() - 1).getColor().equals(playerColor)) {
+                int source = temp.getPosition();
 
                 checkAndAddMove(moveList, source, nd1, board, playerColor);
                 checkAndAddMove(moveList, source, nd2, board, playerColor);
@@ -55,7 +61,7 @@ public class Command extends Dice{
     }
 
     private boolean isValidMove(int dest, Board board, String playerColor) {
-        if (dest < 0 || dest >= Board.TOTAL_NUMBER_OF_SPIKES) {
+        if (dest < 0 || dest >= board.getTotalNoOfSpikes()) {
             return false;
         }
 
