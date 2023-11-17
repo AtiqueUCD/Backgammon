@@ -5,12 +5,13 @@ public class Controller {
     {
         
         Board newBoard = new Board();
+        System.out.println("Welcome to Backgammon!!!");
         Player playerOne = new Player("Player 1");
         Player playerTwo = new Player("Player 2");
         newBoard.initializeBoard();
         Turn playersTurn = new Turn();
 
-        Presenter.displaySpikes(newBoard);
+        //Presenter.displaySpikes(newBoard);
         Scanner in = new Scanner(System.in);
         System.out.print("Enter the first player name : ");
         String inputString = in.nextLine();
@@ -33,7 +34,7 @@ public class Controller {
             playerTwo.setName(inputString + " " + Checker.BLACK);
 
             //Displays the play board
-            Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
+            // Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
             Presenter.displayCommandPrompt();
             String command = in.nextLine();
 
@@ -48,7 +49,7 @@ public class Controller {
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
                 System.out.println("2nd Dice: " + temp[1]);
-                Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
+                //Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
                 Presenter.displayCommandPrompt();
                 command = in.nextLine();
             }

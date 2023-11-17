@@ -3,6 +3,7 @@ import java.util.*;
 public class Command extends Dice{
     
     static int[] diceRoll = new int[2];
+    private static boolean gameStart = false;
 
     public static void acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
@@ -21,8 +22,30 @@ public class Command extends Dice{
                 System.out.println("Commands to play:");
                 System.out.println("1. R/r to roll");
                 System.out.println("2. Q/q to quit");
+                if(getGameState())
+                {
+                    System.out.println("3. Show to display the board");
+                }else
+                {
+                    System.out.println("3. Start to initiate the game");
+                    System.out.println("4. Show to display the board");
+                }
                 System.out.println("==============================");
             break;
+
+            case "start":
+                Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
+                startGame();
+            break;
+
+            case "show":
+                if(getGameState())
+                {
+                    Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
+                }else
+                {
+                    System.out.println("Game is not yet started! Enter START to initiate the game.");
+                }
             default:
                 System.out.println("Invalid command. Please enter 'R/r' to roll the dice or 'Q/q' to Quit");
                 break;
@@ -86,9 +109,23 @@ public class Command extends Dice{
     }
 
     static private void printMoves(List<int[]> moveList) {
+        System.out.println("Possible Moves:");
+        int possibleMoves = 0;
         for (int[] move : moveList) {
-            System.out.println("Move possible from " + move[0] + " to " + move[1]);
+            System.out.println(possibleMoves + ") " + move[0] + " to " + move[1]);
+            possibleMoves++;
         }
+    }
+
+    private static void startGame()
+    {
+        gameStart = true;
+
+    }
+
+    private static boolean getGameState()
+    {
+        return gameStart;
     }
 
 }

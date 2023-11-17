@@ -106,7 +106,7 @@ public class Presenter{
 
     public static void displayCommandPrompt()
     {
-        System.out.print("Please enter 'R/r' to roll the dice or 'Q/q' to Quit: ");
+        System.out.print("Please enter command (\"HINT\" for command pallet): ");
     }
     public static void displayPlayArea(Board boardObj, Player player_one, Player player_two)
     {

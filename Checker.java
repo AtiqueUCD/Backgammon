@@ -14,11 +14,11 @@ public class Checker {
     public static final String OBar = "ON_BAR";
     public static final String OFF = "OFF_BOARD";
 
-    private final static int TOTAL_SPIKES = 24;
+    private final static int TOTAL_SPIKES = 26; //24 checkers and 2 for bar
 
     public Checker(String color, int position, String status) {
         this.color = color;
-        this.position = position;
+        this.position = position;   
         this.status = status;
     }
 
