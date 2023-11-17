@@ -16,8 +16,8 @@ public class Board extends Spike{
     final static private int SPIKE_TWENTY_FOUR = 25;//23;
 
     //add bar
-    final static private int BAR_SIPKE_FIRST_HALF = 6;
-    final static private int BAR_SIPKE_SECOND_HALF = 19;
+    final static public int BAR_SIPKE_FIRST_HALF = 6;
+    final static public int BAR_SIPKE_SECOND_HALF = 19;
 
     ArrayList<Spike> spikes = new ArrayList<>();
     int tempIndex = 0;
