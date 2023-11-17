@@ -11,31 +11,40 @@ public class Command extends Dice{
     public static final String RED = "\u001B[31m";
     public static final String BLACK = "\u001B[30m";
 
-    public static void acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
+    public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
+        boolean returnState = false;
         if(command.matches("[0-9]+"))
         {
+            int nd1 = diceRoll[0];
+            int nd2 = diceRoll[1];
+
             int commandIndex = Integer.parseInt(command);
-            int source = moveList[commandIndex][0];
-            int dest= moveList[commandIndex][1];
+            System.out.println(moveList.get(commandIndex)[0]);
+            
+            int source = moveList.get(commandIndex)[0];
+            int dest = moveList.get(commandIndex)[1];
             //perform move
-            moveChecker(source, dest);
+            // moveChecker(source, dest);
             if(dest - source +1 == nd1){
                 nd1=0;
             }
-            if(dest-source +1 == nd2){
+            else if(dest-source +1 == nd2){
                 nd2=0;
             }
-            if(dest-source +1 == nd1+nd2){
+            else if(dest-source +1 == nd1+nd2){
                 nd1= nd2 = 0;
             }
-            moveList.removeAll();
+            moveList.clear();
 
             if(nd1!=0 || nd2!=0){
                 prediction(nd1, nd2, turnObj.getTurn(), boardObj);
+            
             }else{
-                println("New roll!");
+                System.out.println("New roll!");
+
             }
+            return true;
                 //check if move is done for nd1, nd2, nd1 + nd2
                 //if nd1
                     //move checker
@@ -44,8 +53,9 @@ public class Command extends Dice{
                 //call prediction function
                 //print new move list
             //print "Play next call"
+
         }
-    }
+    
 
 
         switch (command.toLowerCase()) {
@@ -118,6 +128,7 @@ public class Command extends Dice{
                 break;
         }
 
+        return returnState;
     }
 
     public static int[] getDiceRoll()
@@ -149,6 +160,7 @@ public class Command extends Dice{
                     if( nd1!=0 && nd2!=0){
                     checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
                 }
+            }
             }
         }
 
@@ -202,15 +214,15 @@ public class Command extends Dice{
         return gameStart;
     }
 
-    public void moveChecker(Spike source, Spike dest, Board board){
-            Checker sourceChecker = board.get(source).get(board.get(source).size()-1);
-            deleteChecker(sourceChecker);
+    // public static void moveChecker(int source, int dest, Board board){
+    //         Checker sourceChecker = board.get(source).get(board.get(source).size()-1);
+    //         deleteChecker(sourceChecker);
 
-            Checker destChecker = board.get(dest).add(sourceChecker);
+    //         Checker destChecker = board.get(dest).add(sourceChecker);
 
 
 
-    }
+    // }
 
 
 }
