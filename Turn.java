@@ -1,5 +1,7 @@
 public class Turn {
     private boolean playerTurn;
+    private boolean currentPlayStatus;//If true then new roll command will not be accepted, after every play this 
+                                      //variable will be set to false
 
     public void toggleTurn(Player playerOne, Player playerTwo)
     {
@@ -20,5 +22,20 @@ public class Turn {
             System.out.println("Current turn: " + playerOne.getName());
         else
             System.out.println("Current turn: " + playerTwo.getName());
+    }
+
+    public void setTurnInprogress()
+    {
+        currentPlayStatus = true;
+    }
+    
+    public void resetTurnInprogress()
+    {
+        currentPlayStatus = false;
+    }
+
+    public boolean getTurnStatus()
+    {
+        return currentPlayStatus;
     }
 }

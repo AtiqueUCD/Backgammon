@@ -4,19 +4,37 @@ public class Command extends Dice{
     
     static int[] diceRoll = new int[2];
     private static boolean gameStart = false;
+    private static ArrayList<int[]> moveList = new ArrayList<>();
+
+    /*These colors are only used for display messages and not to be used for checkers! */
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String BLACK = "\u001B[30m";
 
     public static void acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
         switch (command.toLowerCase()) {
             case "r":
-                /* Roll the dice */
-                diceRoll = roll();
-                //Show possible moves
-                prediction(diceRoll[0],diceRoll[1],turnObj.getTurn(),boardObj);
-                turnObj.toggleTurn(playerOne,playerTwo);
-                turnObj.displayTurn(playerOne, playerTwo);
-                // printMoves(moveList);
+                if(!getGameState())
+                {
+                    System.out.println(RED+ "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
+                    break;
+                }
+                if(!turnObj.getTurnStatus())
+                {
+                    turnObj.setTurnInprogress();
+                    /* Roll the dice */
+                    diceRoll = roll();
+                    //Show possible moves
+                    prediction(diceRoll[0],diceRoll[1],turnObj.getTurn(),boardObj);
+                    turnObj.toggleTurn(playerOne,playerTwo);
+                    turnObj.displayTurn(playerOne, playerTwo);
+                }else
+                {
+                    System.out.println(RED+ "WARN:" + RESET + " Can't place a new roll, did not made the current move.");
+                }
                 break;
+
             case "hint":
                 System.out.println("==============================");
                 System.out.println("Commands to play:");
@@ -25,10 +43,10 @@ public class Command extends Dice{
                 if(getGameState())
                 {
                     System.out.println("3. Show to display the board");
+                    System.out.println("4. Moves to show the possible moves");
                 }else
                 {
                     System.out.println("3. Start to initiate the game");
-                    System.out.println("4. Show to display the board");
                 }
                 System.out.println("==============================");
             break;
@@ -41,13 +59,27 @@ public class Command extends Dice{
             case "show":
                 if(getGameState())
                 {
+                    turnObj.displayTurn(playerOne, playerTwo);
                     Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
                 }else
                 {
-                    System.out.println("Game is not yet started! Enter START to initiate the game.");
+                    System.out.println(RED+ "WARN:" + RESET + " Game is not yet started! Enter START to initiate the game.");
                 }
+                break;
+
+            case "moves":
+                if(getMovesLength()>0)
+                {
+                    turnObj.displayTurn(playerOne, playerTwo);
+                    printMoves(moveList);
+                }else
+                {
+                    System.out.println(RED+ "WARN:" + RESET + "Roll the dice to show possible moves. Enter 'R / r' to roll.");
+                }
+            break;
+            
             default:
-                System.out.println("Invalid command. Please enter 'R/r' to roll the dice or 'Q/q' to Quit");
+                System.out.println(RED+ "WARN:" + RESET + " Invalid command!! Enter 'Hint' to see the command pallet.");
                 break;
         }
 
@@ -61,7 +93,6 @@ public class Command extends Dice{
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) 
     {
         String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
-        ArrayList<int[]> moveList = new ArrayList<>();
 
         for(int indexSpike = 0; indexSpike < 26; indexSpike++)
         {
@@ -117,10 +148,14 @@ public class Command extends Dice{
         }
     }
 
+    private static int getMovesLength()
+    {
+        return moveList.size();
+    }
+
     private static void startGame()
     {
         gameStart = true;
-
     }
 
     private static boolean getGameState()
