@@ -8,12 +8,12 @@ public class Board extends Spike{
     final static private int TOTAL_NUMBER_OF_SPIKES = 24;// + TOTAL_BAR_NUMBER;
     final static private int SPIKE_ONE = 0;
     final static private int SPIKE_SIX = 5;
-    final static private int SPIKE_EIGHT = 8;//7;
-    final static private int SPIKE_TWELVE = 12;//11;
-    final static private int SPIKE_THRETEEN = 13;//12;
-    final static private int SPIKE_SEVENTEEN = 17;//16;
-    final static private int SPIKE_NINETEEN = 20;//18;
-    final static private int SPIKE_TWENTY_FOUR = 25;//23;
+    final static private int SPIKE_EIGHT = 7;
+    final static private int SPIKE_TWELVE = 11;
+    final static private int SPIKE_THRETEEN = 12;
+    final static private int SPIKE_SEVENTEEN = 16;
+    final static private int SPIKE_NINETEEN = 18;
+    final static private int SPIKE_TWENTY_FOUR = 23;
 
     //add bar
     final static public int BAR_SIPKE_FIRST_HALF = 6;
