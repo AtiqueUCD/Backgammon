@@ -26,14 +26,26 @@ public class Command extends Dice{
             int dest = moveList.get(commandIndex)[1];
             //perform move
             // moveChecker(source, dest);
-            if(dest - source +1 == nd1){
-                nd1=0;
+            int opt1 = nd1 + source;
+            int opt2 = nd2 + source;
+            if(opt1 >= 6)// && opt1 <19)
+            {
+                opt1 +=1;
+            }      
+            if(opt2 >= 6)// && opt1 <19)
+            {
+                opt2 +=1;
             }
-            else if(dest-source +1 == nd2){
-                nd2=0;
+            if(dest == opt1){
+                nd1 = 0;
+                System.out.println("dn1 = 0");
             }
-            else if(dest-source +1 == nd1+nd2){
-                nd1= nd2 = 0;
+            if(dest == opt2){
+                nd2 = 0;
+                System.out.println("dn2 = 0");
+            }
+            if(dest == nd1 + nd2 + source){
+                nd1 = nd2 = 0;
             }
             moveList.clear();
 
@@ -42,6 +54,7 @@ public class Command extends Dice{
             
             }else{
                 System.out.println("New roll!");
+                turnObj.resetTurnInprogress();
 
             }
             return true;
@@ -158,7 +171,7 @@ public class Command extends Dice{
                     if(nd2>0){
                         checkAndAddMove(moveList, source, nd2, board, playerColor);}
                     if( nd1!=0 && nd2!=0){
-                    checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+                        checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
                 }
             }
             }
