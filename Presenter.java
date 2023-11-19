@@ -117,18 +117,26 @@ public class Presenter{
 
     public static void displaySpikes(Board obj)
     {
-        for(int i = 0; i < 24; i++)
+        int k = 0;
+        for(int i = 0; i < 26; i++,k++)
         {
-            System.out.print(i + " ");
-            // if(i == 6 || i == 19)
-            // {
-            //     System.out.print("BAR");
-            // }
-            int totalNoCheckers = obj.getSpike(i).size();
+            if(i == 6 || i == 19)
+            {
+                System.out.print("BAR");
+                k -= 1;
+                System.out.println("");
+                continue;
+            }
+
+            System.out.print(k + " ");
+
+            // int totalNoCheckers = obj.getSpike(i).size();
+            int totalNoCheckers = obj.getSpike(k).size();
             for(int j = 0; j < totalNoCheckers; j++)
             {
                 //print the color
-                System.out.print(obj.getSpike(i).get(j).getColor() + " ");
+                // System.out.print(obj.getSpike(i).get(j).getColor() + " ");
+                System.out.print(obj.getSpike(k).get(j).getColor() + " ");
             }
             System.out.println("");
         }

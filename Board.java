@@ -138,4 +138,9 @@ public class Board extends Spike{
     {
         return spikes.get(spikePosition);
     }
+
+    public void addCheckersToSpike(Checker checker, int position)
+    {
+        spikes.get(position).add(spikes.get(position).size(), checker);
+    }
 }

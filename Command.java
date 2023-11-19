@@ -25,21 +25,7 @@ public class Command extends Dice{
             int source = moveList.get(commandIndex)[0];
             int dest = moveList.get(commandIndex)[1];
             //perform move
-            // moveChecker(source, dest);
-            // int opt1 = nd1 + source;
-            // int opt2 = nd2 + source;
-            // if(opt1 >= 6)// && opt1 <19)
-            // {
-            //     opt1 +=1;
-            // }      
-            // if(opt2 >= 6)// && opt1 <19)
-            // {
-            //     opt2 +=1;
-            // }
-            // if(dest == nd1){
-            //     nd1 = 0;
-            //     System.out.println("dn1 = 0");
-            // }
+            moveChecker(source, dest, boardObj);
 
             if((dest-source) == nd1){
                 diceRoll[0] = 0;
@@ -189,10 +175,6 @@ public class Command extends Dice{
         }
 
         printMoves(moveList);
-        for(int i = 0; i<moveList.size();i++)
-        {
-            System.out.println(moveList.get(i)[0] + ", "+moveList.get(i)[1]);
-        }
     }
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor) {
@@ -242,15 +224,13 @@ public class Command extends Dice{
         return gameStart;
     }
 
-    // public static void moveChecker(int source, int dest, Board board){
-    //         Checker sourceChecker = board.get(source).get(board.get(source).size()-1);
-    //         deleteChecker(sourceChecker);
+    public static void moveChecker(int source, int dest, Board board){
+            Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
+            board.getSpike(source).remove(board.getSpike(source).size()-1);
 
-    //         Checker destChecker = board.get(dest).add(sourceChecker);
+            board.addCheckersToSpike(sourceChecker, dest);
 
-
-
-    // }
+    }
 
 
 }
