@@ -117,13 +117,13 @@ public class Presenter{
 
     public static void displaySpikes(Board obj)
     {
-        for(int i = 0; i < 26; i++)
+        for(int i = 0; i < 24; i++)
         {
             System.out.print(i + " ");
-            if(i == 6 || i == 19)
-            {
-                System.out.print("BAR");
-            }
+            // if(i == 6 || i == 19)
+            // {
+            //     System.out.print("BAR");
+            // }
             int totalNoCheckers = obj.getSpike(i).size();
             for(int j = 0; j < totalNoCheckers; j++)
             {

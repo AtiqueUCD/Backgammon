@@ -5,7 +5,7 @@ import javax.lang.model.type.NullType;
 public class Board extends Spike{
 
     final static private int TOTAL_BAR_NUMBER = 2;
-    final static private int TOTAL_NUMBER_OF_SPIKES = 24 + TOTAL_BAR_NUMBER;
+    final static private int TOTAL_NUMBER_OF_SPIKES = 24;// + TOTAL_BAR_NUMBER;
     final static private int SPIKE_ONE = 0;
     final static private int SPIKE_SIX = 5;
     final static private int SPIKE_EIGHT = 8;//7;

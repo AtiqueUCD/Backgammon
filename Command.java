@@ -14,7 +14,7 @@ public class Command extends Dice{
     public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
         boolean returnState = false;
-        if(command.matches("[0-9]+"))
+        if(command.matches("[0-9]+") && turnObj.getTurnStatus())
         {
             int nd1 = diceRoll[0];
             int nd2 = diceRoll[1];
@@ -26,26 +26,37 @@ public class Command extends Dice{
             int dest = moveList.get(commandIndex)[1];
             //perform move
             // moveChecker(source, dest);
-            int opt1 = nd1 + source;
-            int opt2 = nd2 + source;
-            if(opt1 >= 6)// && opt1 <19)
-            {
-                opt1 +=1;
-            }      
-            if(opt2 >= 6)// && opt1 <19)
-            {
-                opt2 +=1;
-            }
-            if(dest == opt1){
+            // int opt1 = nd1 + source;
+            // int opt2 = nd2 + source;
+            // if(opt1 >= 6)// && opt1 <19)
+            // {
+            //     opt1 +=1;
+            // }      
+            // if(opt2 >= 6)// && opt1 <19)
+            // {
+            //     opt2 +=1;
+            // }
+            // if(dest == nd1){
+            //     nd1 = 0;
+            //     System.out.println("dn1 = 0");
+            // }
+
+            if((dest-source) == nd1){
+                diceRoll[0] = 0;
                 nd1 = 0;
+
                 System.out.println("dn1 = 0");
             }
-            if(dest == opt2){
+            if((dest-source) == nd2){
+                diceRoll[1] = 0;
                 nd2 = 0;
                 System.out.println("dn2 = 0");
             }
-            if(dest == nd1 + nd2 + source){
-                nd1 = nd2 = 0;
+            if((dest-source) == (nd1 + nd2)){
+                diceRoll[0] = 0;
+                diceRoll[1] = 0;
+                nd1 = 0;
+                nd2 = 0;
             }
             moveList.clear();
 
@@ -153,7 +164,7 @@ public class Command extends Dice{
     {
         String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
 
-        for(int indexSpike = 0; indexSpike < 26; indexSpike++)
+        for(int indexSpike = 0; indexSpike < 24; indexSpike++)
         {
             Spike temp = new Spike();
             temp = board.getSpike(indexSpike);
@@ -178,16 +189,20 @@ public class Command extends Dice{
         }
 
         printMoves(moveList);
+        for(int i = 0; i<moveList.size();i++)
+        {
+            System.out.println(moveList.get(i)[0] + ", "+moveList.get(i)[1]);
+        }
     }
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor) {
         int dest = source + steps;
         
         //need to skip the index for the bar
-        if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
-        {
-            dest += 1;
-        }
+        // if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
+        // {
+        //     dest += 1;
+        // }
         if (isValidMove(dest, board, playerColor)) {
             moveList.add(new int[] {source, dest});
         }
