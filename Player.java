@@ -8,7 +8,7 @@ public class Player {
         this.name=name;
         this.score=0;
         this.numCheckers = 15; // default value
-        this.turn=false;
+        // this.turn=false;
     }
 
     public String getName() {
