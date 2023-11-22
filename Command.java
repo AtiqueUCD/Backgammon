@@ -14,6 +14,8 @@ public class Command extends Dice{
     public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
     {
         boolean returnState = false;
+        boolean playerTurn = turnObj.getTurn();
+        System.out.println(playerTurn);
         if(command.matches("[0-9]+") && turnObj.getTurnStatus())
         {
             int nd1 = diceRoll[0];
@@ -27,18 +29,21 @@ public class Command extends Dice{
             //perform move
             moveChecker(source, dest, boardObj);
 
-            if((dest-source) == nd1){
+            /*
+             * Math.abs() function
+             */
+            if(Math.abs(dest-source) == nd1){
                 diceRoll[0] = 0;
                 nd1 = 0;
 
                 System.out.println("dn1 = 0");
             }
-            if((dest-source) == nd2){
+            if(Math.abs(dest-source) == nd2){
                 diceRoll[1] = 0;
                 nd2 = 0;
                 System.out.println("dn2 = 0");
             }
-            if((dest-source) == (nd1 + nd2)){
+            if(Math.abs(dest-source) == (nd1 + nd2)){
                 diceRoll[0] = 0;
                 diceRoll[1] = 0;
                 nd1 = 0;
@@ -47,11 +52,13 @@ public class Command extends Dice{
             moveList.clear();
 
             if(nd1!=0 || nd2!=0){
-                prediction(nd1, nd2, turnObj.getTurn(), boardObj);
+                prediction(nd1, nd2, playerTurn, boardObj);
             
             }else{
                 System.out.println("New roll!");
                 turnObj.resetTurnInprogress();
+                System.out.println("Toggle turn!!");
+                turnObj.toggleTurn(playerOne,playerTwo);
 
             }
             return true;
@@ -81,8 +88,8 @@ public class Command extends Dice{
                     /* Roll the dice */
                     diceRoll = roll();
                     //Show possible moves
-                    prediction(diceRoll[0],diceRoll[1],turnObj.getTurn(),boardObj);
-                    turnObj.toggleTurn(playerOne,playerTwo);
+                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
+                    // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else
                 {
@@ -163,12 +170,23 @@ public class Command extends Dice{
                 {
                     int source = temp.getCheckers(indexCheckers).getPosition();
 
+                    /* 
                     if(nd1>0){
                         checkAndAddMove(moveList, source, nd1, board, playerColor);}
                     if(nd2>0){
                         checkAndAddMove(moveList, source, nd2, board, playerColor);}
                     if( nd1!=0 && nd2!=0){
                         checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
+                    */
+                    if(nd1>0)
+                    {
+                        checkAndAddMove(moveList, source, nd1, board, playerColor, turnPlayer);
+                    }
+                    if(nd2>0){
+                        checkAndAddMove(moveList, source, nd2, board, playerColor, turnPlayer);}
+                    if( nd1!=0 && nd2!=0){
+                        checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor, turnPlayer);
+
                 }
             }
             }
@@ -177,9 +195,16 @@ public class Command extends Dice{
         printMoves(moveList);
     }
 
-    static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor) {
-        int dest = source + steps;
+    static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
         
+        int dest = 0;
+        if(playerTurn == false)
+            dest = source + steps;
+        else if(playerTurn == true)
+        {
+            dest = source - steps;
+        }
+        // System.out.println(playerTurn);
         //need to skip the index for the bar
         // if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
         // {

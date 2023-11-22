@@ -3,6 +3,10 @@ public class Turn {
     private boolean currentPlayStatus;//If true then new roll command will not be accepted, after every play this 
                                       //variable will be set to false
 
+    public Turn()
+    {
+        playerTurn = false;
+    }
     public void toggleTurn(Player playerOne, Player playerTwo)
     {
         playerTurn = playerTurn == false ? true : false;
