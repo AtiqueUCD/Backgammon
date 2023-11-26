@@ -1,33 +1,37 @@
 import java.util.ArrayList;
 
+import javax.lang.model.type.NullType;
+
 public class Board extends Spike{
 
-    final static private int TOTAL_NUMBER_OF_SPIKES = 24;
-    final static private int SPIKE_ONE = 1;
-    final static private int SPIKE_SIX = 6;
-    final static private int SPIKE_EIGHT = 8;
-    final static private int SPIKE_TWELVE = 12;
-    final static private int SPIKE_THRETEEN = 13;
-    final static private int SPIKE_SEVENTEEN = 17;
-    final static private int SPIKE_NINETEEN = 19;
-    final static private int SPIKE_TWENTY_FOUR = 24;
+    final static private int TOTAL_BAR_NUMBER = 2;
+    final static private int TOTAL_NUMBER_OF_SPIKES = 24;// + TOTAL_BAR_NUMBER;
+    final static private int SPIKE_ONE = 0;
+    final static private int SPIKE_SIX = 5;
+    final static private int SPIKE_EIGHT = 7;
+    final static private int SPIKE_TWELVE = 11;
+    final static private int SPIKE_THRETEEN = 12;
+    final static private int SPIKE_SEVENTEEN = 16;
+    final static private int SPIKE_NINETEEN = 18;
+    final static private int SPIKE_TWENTY_FOUR = 23;
 
-    Spike[] spikes = new Spike[TOTAL_NUMBER_OF_SPIKES];
+    //add bar
+    final static public int BAR_SIPKE_FIRST_HALF = 6;
+    final static public int BAR_SIPKE_SECOND_HALF = 19;
+
+    ArrayList<Spike> spikes = new ArrayList<>();
     int tempIndex = 0;
-    // boolean color = false;
     String color = Checker.BLACK;
 
     /*
      * 2-D array of spikes
      */
-    // ArrayList<ArrayList<Spike>> arrayOfSpikes = new ArrayList<>();
     ArrayList<Spike[]> arrayOfSpikes = new ArrayList<>();
     
     private void initializeSpikes()
     {
-        // Spike[] spikes = new Spike[TOTAL_NUMBER_OF_SPIKES];
-        // int tempIndex = 0;
-        // boolean color = false;
+        int index = -1;
+        int ID = 0;
 
         for(int spike = 0; spike < TOTAL_NUMBER_OF_SPIKES; spike++)
         {
@@ -36,51 +40,88 @@ public class Board extends Spike{
                 case SPIKE_ONE:
                     /*Add two checkers */
                     tempIndex = 2;
+                    color = Checker.RED;
+                    index++;
                 break;
 
                 case SPIKE_TWENTY_FOUR:
                     /*Add two checkers */
                     tempIndex = 2;
-                    color = Checker.RED;//RED
+                    color = Checker.BLACK;
+                    index++;
                 break;
 
                 case SPIKE_SIX:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;
+                    index++;
+                break;
+
                 case SPIKE_THRETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
+                    color = Checker.RED;
+                    index++;
                 break;
                 
                 case SPIKE_TWELVE:
+                    /*Add five checkers */
+                    tempIndex = 5;
+                    color = Checker.BLACK;
+                    index++;
+                break;
+
                 case SPIKE_NINETEEN:
                     /*Add five checkers */
                     tempIndex = 5;
-                    color = Checker.RED;;
+                    color = Checker.RED;
+                    index++;
                 break;
 
                 case SPIKE_EIGHT:
                     /*Add three checkers */
                     tempIndex = 3;
+                    color = Checker.RED;
+                    index++;
                 break;
 
                 case SPIKE_SEVENTEEN:
                     /*Add three checkers */
                     tempIndex = 3;
-                    color = Checker.RED;
+                    color = Checker.BLACK;
+                    index++;
                 break;
 
+                // case BAR_SIPKE_FIRST_HALF:
+                // case BAR_SIPKE_SECOND_HALF:
+                //     System.out.println("Adding bar!");
+                //     break;
                 default:
+                    tempIndex = 0;
                 break;
             }
             /*
              * Add checkers to the spike array
-             */
-            for(int checkers = 0; checkers < tempIndex; checkers++)
+             */            
+            spikes.add(spike,new Spike());
+            //System.out.print("Spike no: " + spike + " ");//debug
+
+            for(int checkers = 0; checkers < tempIndex; checkers++,ID++)
             {
-                // spikes[spike].insertChecker(new Checker(color, spike));
-                // arrayOfSpikes.add(spikes);
+                spikes.get(spike).addChecker(new Checker(color, spike, ID));
+                //System.out.print("A ");//debug
             }
+            //Debug
+            //System.out.println("No of checkers in current spike: "+ spikes.get(index).size());
+
             
         }
+        //Debug
+        // System.out.println("Total number of spikes:" + spikes.size());
+        // System.out.println("No of checkers in 1st spike: "+ spikes.get(0).size());
+        // System.out.println("No of checkers in 1st spike: "+ spikes.get(1).size());
+        // System.out.println("No of checkers in 1st spike: "+ spikes.get(2).size());
     }
 
     public void initializeBoard()
@@ -93,8 +134,13 @@ public class Board extends Spike{
         return TOTAL_NUMBER_OF_SPIKES;
     }
 
-    public Spike[] getSpike(int spikePosition)
+    public Spike getSpike(int spikePosition)
     {
-        return arrayOfSpikes.get(spikePosition);
+        return spikes.get(spikePosition);
+    }
+
+    public void addCheckersToSpike(Checker checker, int position)
+    {
+        spikes.get(position).add(spikes.get(position).size(), checker);
     }
 }

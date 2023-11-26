@@ -3,31 +3,39 @@ public class Checker {
     private String color; // Color of the checker
     private int position; // position on the game board
     private String status; // Status of the checker
+    private int ID; // ID of the checkers
 
-    public static final String RED = "\u001B[31m";
-    public static final String BLACK = "\u001B[30m";
     public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m" + "\u25A0" + RESET;
+    public static final String BLACK = "\u001B[30m" + "\u25A0" + RESET;
+    
 
     public static final String ON = "ON_BOARD";
     public static final String OBar = "ON_BAR";
     public static final String OFF = "OFF_BOARD";
 
-    private final static int TOTAL_SPIKES = 24;
+    private final static int TOTAL_SPIKES = 26; //24 checkers and 2 for bar
 
     public Checker(String color, int position, String status) {
         this.color = color;
-        this.position = position;
+        this.position = position;   
         this.status = status;
     }
 
-    public Checker(String color, int position) {
+    public Checker(String color, int position, int ID) {
         this.color = color;
         this.position = position;
         status = ON;
+        this.ID = ID;
     }
 
+    public int getID()
+    {
+        return ID;
+    }
+    
     public String getColor() {
-        return color;
+        return (color);
     }
 
     public int getPosition() {

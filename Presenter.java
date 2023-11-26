@@ -106,12 +106,40 @@ public class Presenter{
 
     public static void displayCommandPrompt()
     {
-        System.out.print("Please enter 'R/r' to roll the dice or 'Q/q' to Quit: ");
+        System.out.print("Please enter command (\"HINT\" for command pallet): ");
     }
-    public static void displayPlayArea(Player player_one, Player player_two)
+    public static void displayPlayArea(Board boardObj, Player player_one, Player player_two)
     {
         displayPlayerDetails(player_one,player_two);
-        viewBoard();
+        // viewBoard();
+        displaySpikes(boardObj);
+    }
+
+    public static void displaySpikes(Board obj)
+    {
+        int k = 0;
+        for(int i = 0; i < 26; i++,k++)
+        {
+            if(i == 6 || i == 19)
+            {
+                System.out.print("BAR");
+                k -= 1;
+                System.out.println("");
+                continue;
+            }
+
+            System.out.print(k + " ");
+
+            // int totalNoCheckers = obj.getSpike(i).size();
+            int totalNoCheckers = obj.getSpike(k).size();
+            for(int j = 0; j < totalNoCheckers; j++)
+            {
+                //print the color
+                // System.out.print(obj.getSpike(i).get(j).getColor() + " ");
+                System.out.print(obj.getSpike(k).get(j).getColor() + " ");
+            }
+            System.out.println("");
+        }
     }
 
     /*Not in use */
