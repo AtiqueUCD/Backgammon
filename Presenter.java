@@ -140,6 +140,18 @@ public class Presenter{
             }
             System.out.println("");
         }
+
+        //Display bar for now
+        for(int i = 0; i < obj.arrayForBar.get(0).size();i++)
+        {
+            System.out.println("Bar RED: ");
+            System.out.println(obj.arrayForBar.get(0).get(i));
+        }
+        for(int i = 0; i < obj.arrayForBar.get(1).size();i++)
+        {
+            System.out.println("Bar BLACK: ");
+            System.out.println(obj.arrayForBar.get(1).get(i));
+        }
     }
 
     /*Not in use */

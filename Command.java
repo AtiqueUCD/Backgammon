@@ -16,6 +16,12 @@ public class Command extends Dice{
         boolean returnState = false;
         boolean playerTurn = turnObj.getTurn();
         System.out.println(playerTurn);
+
+        
+        int d1 = 0;
+        int d2 = 0;
+        
+
         if(command.matches("[0-9]+") && turnObj.getTurnStatus())
         {
             int nd1 = diceRoll[0];
@@ -27,7 +33,7 @@ public class Command extends Dice{
             int source = moveList.get(commandIndex)[0];
             int dest = moveList.get(commandIndex)[1];
             //perform move
-            moveChecker(source, dest, boardObj);
+            moveChecker(source, dest, boardObj, turnObj.getTurn());
 
             /*
              * Math.abs() function
@@ -72,10 +78,43 @@ public class Command extends Dice{
             //print "Play next call"
 
         }
-    
+        if(command.length() > 4)
+        {
 
+            String tempString = command.substring(0, 4).toLowerCase();
+            if(tempString.equals("dice"))
+            {
+                System.out.println(tempString);
+                d1 = Integer.parseInt(String.valueOf(command.substring(4,5)));
+                d2 = Integer.parseInt(String.valueOf(command.substring(5)));
+                System.out.println("d1: " + d1 + "d2 : " + d2);
+                command = tempString;
+            }
+        }
 
         switch (command.toLowerCase()) {
+            case "dice":
+                if(!getGameState())
+                {
+                    System.out.println(RED+ "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
+                    break;
+                }
+                if(!turnObj.getTurnStatus())
+                {
+                    turnObj.setTurnInprogress();
+                    /* Roll the dice */
+                    // diceRoll = roll();
+                    diceRoll[0] = d1;
+                    diceRoll[1] = d2;
+                    //Show possible moves
+                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
+                    // turnObj.toggleTurn(playerOne,playerTwo);
+                    turnObj.displayTurn(playerOne, playerTwo);
+                }else
+                {
+                    System.out.println(RED+ "WARN:" + RESET + " Can't place a new roll, did not made the current move.");
+                }
+            break;
             case "r":
                 if(!getGameState())
                 {
@@ -116,6 +155,7 @@ public class Command extends Dice{
             case "start":
                 Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
                 startGame();
+                turnObj.displayTurn(playerOne, playerTwo);
             break;
 
             case "show":
@@ -155,7 +195,7 @@ public class Command extends Dice{
 
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) 
     {
-        String playerColor = (turnPlayer == true) ? Checker.BLACK : Checker.RED;
+        String playerColor = (turnPlayer == true) ? Checker.RED : Checker.BLACK;
 
         for(int indexSpike = 0; indexSpike < 24; indexSpike++)
         {
@@ -198,9 +238,9 @@ public class Command extends Dice{
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
         
         int dest = 0;
-        if(playerTurn == false)
+        if(playerTurn == true)//for RED
             dest = source + steps;
-        else if(playerTurn == true)
+        else if(playerTurn == false)//for BLACK
         {
             dest = source - steps;
         }
@@ -222,6 +262,10 @@ public class Command extends Dice{
 
         String opponentColor = playerColor.equals(Checker.RED) ? Checker.BLACK : Checker.RED;
         Spike destinationSpike = board.getSpike(dest);
+        if(destinationSpike.nbColoredChecker(opponentColor) == 1)
+        {
+            System.out.println("KILL!!!!!");
+        }
         return destinationSpike.nbColoredChecker(opponentColor) <= 1;
     }
 
@@ -249,11 +293,41 @@ public class Command extends Dice{
         return gameStart;
     }
 
-    public static void moveChecker(int source, int dest, Board board){
+    public static void moveChecker(int source, int dest, Board board, Boolean turn)
+    {
+        int noOfCheckers = 0;
+        System.out.println("Player turn =  " + turn);
+        //Check for kill
+        if(turn == false)//We want the opposit players checkers to kill
+        {
+            noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.RED);
+            System.out.println("Red number = " + noOfCheckers);
+
+            //Kill RED checkers
+        }
+        else{
+            noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.BLACK);
+            System.out.println("Black number = " + noOfCheckers);
+
+            //Kill BLACK checker
+        }
+
+
+        if(noOfCheckers == 1)
+        {
+            Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
+            board.getSpike(source).remove(board.getSpike(source).size()-1);//remove the source checker
+            //Kill RED checker
+            board.addCheckToBar(board.getSpike(dest).remove(board.getSpike(dest).size()-1), turn);
+            board.addCheckersToSpike(sourceChecker, dest);
+        }
+        else
+        {
             Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
             board.getSpike(source).remove(board.getSpike(source).size()-1);
 
             board.addCheckersToSpike(sourceChecker, dest);
+        }
 
     }
 

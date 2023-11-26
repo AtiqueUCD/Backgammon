@@ -3,6 +3,10 @@ public class Turn {
     private boolean currentPlayStatus;//If true then new roll command will not be accepted, after every play this 
                                       //variable will be set to false
 
+    /*
+     * TRUE - RED
+     * FALSE - BLACK
+     */
     public Turn()
     {
         playerTurn = false;
