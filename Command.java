@@ -197,6 +197,8 @@ public class Command extends Dice{
     {
         String playerColor = (turnPlayer == true) ? Checker.RED : Checker.BLACK;
 
+        moveList.clear();
+
         for(int indexSpike = 0; indexSpike < 24; indexSpike++)
         {
             Spike temp = new Spike();
@@ -236,24 +238,25 @@ public class Command extends Dice{
     }
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
-        
-        int dest = 0;
-        if(playerTurn == true)//for RED
-            dest = source + steps;
-        else if(playerTurn == false)//for BLACK
-        {
-            dest = source - steps;
-        }
-        // System.out.println(playerTurn);
-        //need to skip the index for the bar
-        // if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
-        // {
-        //     dest += 1;
-        // }
-        if (isValidMove(dest, board, playerColor)) {
-            moveList.add(new int[] {source, dest});
+    int dest = playerTurn ? source + steps : source - steps;
+
+    if (!isValidMove(dest, board, playerColor)) {
+        return;
+    }
+
+    boolean moveExists = false;
+    for (int[] move : moveList) {
+        if (move[0] == source && move[1] == dest) {
+            moveExists = true;
+            break;
         }
     }
+
+    if (!moveExists) {
+        moveList.add(new int[]{source, dest});
+    }
+}
+
 
     static private boolean isValidMove(int dest, Board board, String playerColor) {
         if (dest < 0 || dest >= board.getTotalNoOfSpikes()) {
