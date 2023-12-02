@@ -1,2 +1,10 @@
 /*.class
 Command.class
+Board.class
+Checker.class
+Command.class
+Controller.class
+Dice.class
+Player.class
+Presenter.class
+Spike.class
