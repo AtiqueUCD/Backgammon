@@ -240,6 +240,10 @@ public class Command extends Dice{
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
     int dest = playerTurn ? source + steps : source - steps;
 
+     if (dest < 0 || dest >= 24 || !isValidMove(dest, board, playerColor)) {
+        return; 
+    }
+
     if (!isValidMove(dest, board, playerColor)) {
         return;
     }
