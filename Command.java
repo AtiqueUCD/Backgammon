@@ -32,24 +32,35 @@ public class Command extends Dice{
             
             int source = moveList.get(commandIndex)[0];
             int dest = moveList.get(commandIndex)[1];
-            //perform move
-            moveChecker(source, dest, boardObj, turnObj.getTurn());
 
+            // //Check is the move is blocked or not
+            // if(turnObj.getBlockedmove(playerOne, playerTwo) == true)
+            // {
+            //     moveChckersFromBar(source, dest, boardObj, turnObj, playerOne, playerTwo);
+            // }
+            // //perform move
+            // else{
+            // moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo);//.getTurn());
+            // }
+
+            int arr[] = new int[2];
+            //perform move
+            moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo);
             /*
              * Math.abs() function
              */
-            if(Math.abs(dest-source) == nd1){
+            if(Math.abs(dest-source) == diceRoll[0]){
                 diceRoll[0] = 0;
                 nd1 = 0;
 
                 System.out.println("dn1 = 0");
             }
-            if(Math.abs(dest-source) == nd2){
+            if(Math.abs(dest-source) == diceRoll[1]){
                 diceRoll[1] = 0;
                 nd2 = 0;
                 System.out.println("dn2 = 0");
             }
-            if(Math.abs(dest-source) == (nd1 + nd2)){
+            if(Math.abs(dest-source) == ( diceRoll[0]+ diceRoll[1])){
                 diceRoll[0] = 0;
                 diceRoll[1] = 0;
                 nd1 = 0;
@@ -57,8 +68,8 @@ public class Command extends Dice{
             }
             moveList.clear();
 
-            if(nd1!=0 || nd2!=0){
-                prediction(nd1, nd2, playerTurn, boardObj);
+            if(diceRoll[0]!=0 || diceRoll[1]!=0){
+                prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj);
             
             }else{
                 System.out.println("New roll!");
@@ -68,14 +79,6 @@ public class Command extends Dice{
 
             }
             return true;
-                //check if move is done for nd1, nd2, nd1 + nd2
-                //if nd1
-                    //move checker
-                    // nd1 = 0
-            // if(nd1!=0 || nd2!=0)
-                //call prediction function
-                //print new move list
-            //print "Play next call"
 
         }
         if(command.length() > 4)
@@ -99,7 +102,7 @@ public class Command extends Dice{
                     System.out.println(RED+ "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
                     break;
                 }
-                if(!turnObj.getTurnStatus())
+                if(!turnObj.getTurnStatus()&& !turnObj.getBlockedmove(playerOne, playerTwo))
                 {
                     turnObj.setTurnInprogress();
                     /* Roll the dice */
@@ -110,7 +113,20 @@ public class Command extends Dice{
                     prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
                     // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
-                }else
+                }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
+                    System.out.println("Need to get off the bar first");
+                    
+                    //Date:- 21-12-23 - ver 1.0.0
+                    turnObj.setTurnInprogress();//bug fix
+                    
+                    
+                    diceRoll[0] = d1;
+                    diceRoll[1] = d2;
+                    //need to get of the bar
+                    gettingOfBarPrediction(diceRoll[0],diceRoll[1], playerOne, playerTwo, turnObj, boardObj);
+                }
+                
+                else
                 {
                     System.out.println(RED+ "WARN:" + RESET + " Can't place a new roll, did not made the current move.");
                 }
@@ -121,7 +137,7 @@ public class Command extends Dice{
                     System.out.println(RED+ "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
                     break;
                 }
-                if(!turnObj.getTurnStatus())
+                if(!turnObj.getTurnStatus() && !turnObj.getBlockedmove(playerOne, playerTwo))//there should be no blocked moves and current player turn is not over yet
                 {
                     turnObj.setTurnInprogress();
                     /* Roll the dice */
@@ -130,7 +146,12 @@ public class Command extends Dice{
                     prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
                     // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
-                }else
+                }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
+                    System.out.println("Need to get off the bar first");
+                    //need to get of the bar
+                    gettingOfBarPrediction(diceRoll[0],diceRoll[1], playerOne, playerTwo, turnObj, boardObj);
+                }
+                else
                 {
                     System.out.println(RED+ "WARN:" + RESET + " Can't place a new roll, did not made the current move.");
                 }
@@ -173,6 +194,7 @@ public class Command extends Dice{
                 if(getMovesLength()>0)
                 {
                     turnObj.displayTurn(playerOne, playerTwo);
+                    turnObj.displayTurn(playerOne, playerTwo);
                     printMoves(moveList);
                 }else
                 {
@@ -193,9 +215,164 @@ public class Command extends Dice{
         return diceRoll;
     }
 
+
+
+    static public void gettingOfBarPrediction(int nd1, int nd2,Player playerOne, Player playerTwo, Turn turnObj, Board boardObj)
+    {
+        boolean turn = turnObj.getTurn();
+        String colorOfCheckers = "", compareColor = "";
+        int start = 0, end = 0;
+        int src = 0, dest = 0;
+        int noOfCheckers = 0;
+        int[] arr = new int[2];
+
+        if(turn == true)
+        {
+            System.out.println("RED move blocked!!");
+            //for player one "RED" 
+            //placing in 0 - 5
+            start = 0;
+            end = 5;
+            compareColor = Checker.RED;
+            src = 30;//for index zero
+
+            arr[0] = 6 - diceRoll[0];
+            arr[1] = 6 - diceRoll[1];
+        }
+        {
+            System.out.println("BLACK move blocked!!");
+            //Black - player two
+            //placing in 18-23
+            start = 18;
+            end = 23;
+
+            src = 31;//for index one
+
+            arr[0] = 24 - diceRoll[0];
+            arr[1] = 24 - diceRoll[1];
+
+            compareColor = Checker.BLACK;
+            
+        }
+
+        start = arr[0];
+        int index = 0;
+        System.out.println("Possible moves = " + arr[0] + ", " + arr[1]);
+        for(int pos = arr[0]; index < 2; index++)
+        {
+            pos = arr[index];
+            // dest = pos;
+            //check is the spike is empty
+            if(boardObj.getSpike(pos).isEmpty() == true)
+            {
+                //current spike is empty
+                moveList.add(new int[]{src, pos});
+                continue;
+            }
+            colorOfCheckers = boardObj.getSpike(pos).get(boardObj.getSpike(pos).size()-1).getColor();//bug:- when the spike is empty then throws error
+            noOfCheckers = boardObj.getSpike(pos).size();
+            
+            if(colorOfCheckers.equals(compareColor) || noOfCheckers == 0)
+            {
+                // dest = pos;
+                //add to moves list
+                moveList.add(new int[]{src, pos});
+            }
+            //killing
+            else if(noOfCheckers == 1 && colorOfCheckers.equals(compareColor))
+            {
+                moveList.add(new int[]{src, pos});
+            }
+            
+        }
+
+
+        //if there are no possible moved left
+        if(moveList.isEmpty())
+        {
+            System.out.println("No possible places to get off!!!!");
+            //return false;
+        }    
+        printMoves(moveList);
+
+    }
+
+//original
+/* 
+    static public void gettingOfBarPrediction(int nd1, int nd2,Player playerOne, Player playerTwo, Turn turnObj, Board boardObj)
+    {
+        boolean turn = turnObj.getTurn();
+        String colorOfCheckers = "", compareColor = "";
+        int start = 0, end = 0;
+        int src = 0, dest = 0;
+        int noOfCheckers = 0;
+
+        if(turn == true)
+        {
+            System.out.println("RED move blocked!!");
+            //for player one "RED" 
+            //placing in 0 - 5
+            start = 0;
+            end = 5;
+            compareColor = Checker.RED;
+            src = 30;//for index zero
+        }
+        {
+            System.out.println("BLACK move blocked!!");
+            //Black - player two
+            //placing in 18-23
+            start = 18;
+            end = 23;
+            compareColor = Checker.BLACK;
+            src = 31;//for index one
+        }
+
+        for(int pos = start; pos <= end; pos++)
+        {
+
+            dest = pos;
+            //check is the spike is empty
+            if(boardObj.getSpike(pos).isEmpty() == true)
+            {
+                //current spike is empty
+                moveList.add(new int[]{src, dest});
+                continue;
+            }
+            colorOfCheckers = boardObj.getSpike(pos).get(boardObj.getSpike(pos).size()-1).getColor();//bug:- when the spike is empty then throws error
+            noOfCheckers = boardObj.getSpike(pos).size();
+            
+            if(colorOfCheckers.equals(compareColor) || noOfCheckers == 0)
+            {
+                // dest = pos;
+                //add to moves list
+                moveList.add(new int[]{src, dest});
+            }
+            //killing
+            else if(noOfCheckers == 1 && colorOfCheckers.equals(compareColor))
+            {
+                moveList.add(new int[]{src, dest});
+            }
+            
+        }
+
+
+        //if there are no possible moved left
+        if(moveList.isEmpty())
+        {
+            System.out.println("No possible places to get off!!!!");
+            //return false;
+        }    
+        printMoves(moveList);
+
+    }
+*/
+
+
     static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) 
     {
         String playerColor = (turnPlayer == true) ? Checker.RED : Checker.BLACK;
+
+        moveList.clear();
 
         for(int indexSpike = 0; indexSpike < 24; indexSpike++)
         {
@@ -210,14 +387,6 @@ public class Command extends Dice{
                 {
                     int source = temp.getCheckers(indexCheckers).getPosition();
 
-                    /* 
-                    if(nd1>0){
-                        checkAndAddMove(moveList, source, nd1, board, playerColor);}
-                    if(nd2>0){
-                        checkAndAddMove(moveList, source, nd2, board, playerColor);}
-                    if( nd1!=0 && nd2!=0){
-                        checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor);
-                    */
                     if(nd1>0)
                     {
                         checkAndAddMove(moveList, source, nd1, board, playerColor, turnPlayer);
@@ -227,8 +396,8 @@ public class Command extends Dice{
                     if( nd1!=0 && nd2!=0){
                         checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor, turnPlayer);
 
+                    }
                 }
-            }
             }
         }
 
@@ -236,24 +405,25 @@ public class Command extends Dice{
     }
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
-        
-        int dest = 0;
-        if(playerTurn == true)//for RED
-            dest = source + steps;
-        else if(playerTurn == false)//for BLACK
-        {
-            dest = source - steps;
-        }
-        // System.out.println(playerTurn);
-        //need to skip the index for the bar
-        // if(dest == Board.BAR_SIPKE_FIRST_HALF || dest == Board.BAR_SIPKE_SECOND_HALF)
-        // {
-        //     dest += 1;
-        // }
-        if (isValidMove(dest, board, playerColor)) {
-            moveList.add(new int[] {source, dest});
+    int dest = playerTurn ? source + steps : source - steps;
+
+    if (!isValidMove(dest, board, playerColor)) {
+        return;
+    }
+
+    boolean moveExists = false;
+    for (int[] move : moveList) {
+        if (move[0] == source && move[1] == dest) {
+            moveExists = true;
+            break;
         }
     }
+
+    if (!moveExists) {
+        moveList.add(new int[]{source, dest});
+    }
+}
+
 
     static private boolean isValidMove(int dest, Board board, String playerColor) {
         if (dest < 0 || dest >= board.getTotalNoOfSpikes()) {
@@ -293,33 +463,47 @@ public class Command extends Dice{
         return gameStart;
     }
 
-    public static void moveChecker(int source, int dest, Board board, Boolean turn)
+    public static void moveChckersFromBar(int source, int dest, Board board, Turn turnObj, Player playerOne, Player playerTwo)
     {
         int noOfCheckers = 0;
+        boolean turn = turnObj.getTurn();
+        boolean resetBlockMove = false;
+
         System.out.println("Player turn =  " + turn);
+
+        source -= 30;
+
+
+
         //Check for kill
         if(turn == false)//We want the opposit players checkers to kill
         {
+            //Chance for the black checkers to kill the red
             noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.RED);
             System.out.println("Red number = " + noOfCheckers);
 
             //Kill RED checkers
         }
         else{
+            //chance for the red checkers to kill the black
             noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.BLACK);
             System.out.println("Black number = " + noOfCheckers);
 
             //Kill BLACK checker
         }
-
-
         if(noOfCheckers == 1)
         {
-            Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
-            board.getSpike(source).remove(board.getSpike(source).size()-1);//remove the source checker
+            Checker sourceChecker = board.removeCheckerFromBar(turn);//remove the checkers from the Bar
             //Kill RED checker
             board.addCheckToBar(board.getSpike(dest).remove(board.getSpike(dest).size()-1), turn);
             board.addCheckersToSpike(sourceChecker, dest);
+            
+            //Blocks the turn, untill the respective player does not removes it from the block
+            turnObj.setBlockedmove(playerOne, playerTwo);
+
+            // turnObj.toggleTurn(playerOne, playerTwo);
+            turnObj.displayTurn(playerOne, playerTwo);
+            resetBlockMove = true;
         }
         else
         {
@@ -327,6 +511,99 @@ public class Command extends Dice{
             board.getSpike(source).remove(board.getSpike(source).size()-1);
 
             board.addCheckersToSpike(sourceChecker, dest);
+            resetBlockMove = true;
+        }
+
+        //resets the blocked move
+        if(resetBlockMove == true)
+        {
+            turnObj.resetBlockedmove(playerOne, playerTwo);
+            //Blocked move reset
+        }
+
+    }
+    public static void moveChecker(int source, int dest, Board board, Turn turnObj, Player playerOne, Player playerTwo)//Boolean turn)
+    {
+        int noOfCheckers = 0;
+        boolean turn = turnObj.getTurn();//
+        System.out.println("Player turn =  " + turn);
+        //Check for kill
+        if(turn == false)//We want the opposit players checkers to kill
+        {
+            //Chance for the black checkers to kill the red
+            noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.RED);
+            System.out.println("Red number = " + noOfCheckers);
+
+            //Kill RED checkers
+        }
+        else{
+            //chance for the red checkers to kill the black
+            noOfCheckers = board.spikes.get(dest).nbColoredChecker(Checker.BLACK);
+            System.out.println("Black number = " + noOfCheckers);
+
+            //Kill BLACK checker
+        }
+        if(noOfCheckers == 1)
+        {
+            Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
+            board.getSpike(source).remove(board.getSpike(source).size()-1);//remove the source checker
+            //Kill RED checker
+            board.addCheckToBar(board.getSpike(dest).remove(board.getSpike(dest).size()-1), turn);
+            board.addCheckersToSpike(sourceChecker, dest);
+            
+            //Blocks the turn, untill the respective player does not removes it from the block
+            turnObj.setBlockedmove(playerOne, playerTwo);
+        }
+        else
+        {
+            //check the source address of the spike if greater than 24
+            if(source > 24)
+            {
+                //Removing the checkers from the bar
+                System.out.println("Removing the checkers from the bar.");
+                Checker sourceChecker = board.removeCheckerFromBar(turnObj.getTurn());
+                board.addCheckersToSpike(sourceChecker, dest);
+
+                //need to check the number od checkers on the bar
+                int noCheckeronBar = board.getnoCheckersFromCurrentBar(turn);
+                
+                //if the number of checers on the bar is zero then reset the blocked move
+                if(noCheckeronBar == 0)
+                {
+                    //reset the blocked moves
+                    turnObj.resetBlockedmove(playerOne, playerTwo);
+
+                    //exhaust the dice roll used
+                    int temp = 0;
+                    if(dest > 6)
+                    {
+                        temp = 24 - dest;//for placing the black checkers
+                    }else{
+                        temp = dest - 1;//for placing the red checkers
+                    }
+
+                    if(diceRoll[0] == temp)
+                    {
+                        diceRoll[0] = 0;
+                    }else
+                    {
+                        diceRoll[1] = 0;
+                    }
+
+                }
+                //if the number of checkers on the bar is non zero then do no reset the blocked move
+            }
+            else
+            {
+                //Standard transaction
+                System.out.println("Normal transaction.");
+                Checker sourceChecker = board.getSpike(source).get(board.getSpike(source).size()-1);
+                board.getSpike(source).remove(board.getSpike(source).size()-1);
+                board.addCheckersToSpike(sourceChecker, dest);
+
+                // return new int[]{dest,source};
+            }
+
         }
 
     }

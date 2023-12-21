@@ -49,6 +49,8 @@ public class Controller {
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
                 System.out.println("2nd Dice: " + temp[1]);
+                System.out.println("RED player state: " + playerOne.getmoveBlocked());
+                System.out.println("BLACK player state: " + playerTwo.getmoveBlocked());
                 //Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
                 Presenter.displayCommandPrompt();
                 command = in.nextLine();

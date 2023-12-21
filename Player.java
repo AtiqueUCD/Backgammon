@@ -3,11 +3,14 @@ public class Player {
     private int score;
     private int numCheckers;
     private boolean turn;
+    private boolean moveBlocked;/*If false = player can move the checker, if true then 
+                                    player has to remove the checker from the bar to play */
 
     public Player(String name){
         this.name=name;
         this.score=0;
         this.numCheckers = 15; // default value
+        this.moveBlocked = false;
         // this.turn=false;
     }
 
@@ -61,6 +64,22 @@ public class Player {
         }
     }
 
+    public boolean getmoveBlocked()
+    {
+        return moveBlocked;
+    }
+
+    public void setMoveBlock()
+    {
+        moveBlocked = true;
+    }
+
+    public void resetMoveBlock()
+    {
+        moveBlocked = false;
+    }
+    
+    
     @Override
     public String toString(){
         return "Player [Name: "+getName()+", Score: "+getScore()+", Number of Checkers: "+getNumCheckers()+", Turn: "+turn+ "]";
