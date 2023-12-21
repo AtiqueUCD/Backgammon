@@ -28,6 +28,9 @@ public class Board extends Spike{
      */
     ArrayList<Spike[]> arrayOfSpikes = new ArrayList<>();
     
+    //Single array for the checkers
+    ArrayList<Spike> arrayForBar = new ArrayList<>();
+    
     private void initializeSpikes()
     {
         int index = -1;
@@ -122,6 +125,10 @@ public class Board extends Spike{
         // System.out.println("No of checkers in 1st spike: "+ spikes.get(0).size());
         // System.out.println("No of checkers in 1st spike: "+ spikes.get(1).size());
         // System.out.println("No of checkers in 1st spike: "+ spikes.get(2).size());
+
+        //Initialize the bar
+        arrayForBar.add(0,new Spike());//For player one
+        arrayForBar.add(1,new Spike());//For player two
     }
 
     public void initializeBoard()
@@ -142,5 +149,53 @@ public class Board extends Spike{
     public void addCheckersToSpike(Checker checker, int position)
     {
         spikes.get(position).add(spikes.get(position).size(), checker);
+    }
+
+    public int getnoCheckersFromCurrentBar(boolean turnObj)
+    {
+        int size = 0;
+        if(turnObj)
+        {
+            //Red checkers bar
+            size = arrayForBar.get(1).size();
+        }
+        else{
+            //Black checkers bar
+            size = arrayForBar.get(0).size();
+        }
+
+        return size;
+    }
+    /*
+     * killed black checkers go to bar[0]
+     * killed red checkers go to bar[1]
+     */
+    public void addCheckToBar(Checker checker, boolean turnObj)
+    {
+        if(turnObj)
+        {
+            arrayForBar.get(0).add(checker);
+        }
+        else{
+            arrayForBar.get(1).add(checker);
+        }
+    }
+
+    /*
+     * Black checkers will be retrived from bar[0]
+     * Red checkers will be retrived from bar[1]
+     */
+    public Checker removeCheckerFromBar(boolean turnObj)
+    {
+        Checker tempChecker;
+        if(turnObj)
+        {
+            tempChecker = arrayForBar.get(1).remove(arrayForBar.get(1).size()-1);
+        }
+        else{
+            tempChecker = arrayForBar.get(0).remove(arrayForBar.get(0).size()-1);
+        }
+
+        return tempChecker;
     }
 }
