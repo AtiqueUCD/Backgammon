@@ -6,6 +6,9 @@ public class Command extends Dice{
     private static boolean gameStart = false;
     private static ArrayList<int[]> moveList = new ArrayList<>();
 
+    public static ArrayList<String> testCommands = new ArrayList<>();
+    public static int TestCommandSize = 0;
+
     /*These colors are only used for display messages and not to be used for checkers! */
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
@@ -202,11 +205,23 @@ public class Command extends Dice{
                 }
             break;
             
+            case "testrun":
+                System.out.println("Enter the file name: ");
+                Scanner tempin = new Scanner(System.in);
+                String filename = tempin.nextLine();
+                testCommands = TestCommand.readTestCommandFile(filename);
+                TestCommandSize = testCommands.size();
+                int i = 0;
+                while(TestCommandSize-- > 0)
+                {
+                    acceptCommand(testCommands.get(i++), boardObj, turnObj, playerOne, playerTwo);
+                }
+            break;
             default:
                 System.out.println(RED+ "WARN:" + RESET + " Invalid command!! Enter 'Hint' to see the command pallet.");
                 break;
         }
-
+        returnState = true;
         return returnState;
     }
 
