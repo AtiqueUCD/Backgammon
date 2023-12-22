@@ -98,19 +98,21 @@ public class Presenter{
         // viewBoard();
     }
 
-    private static void displayPlayerDetails(Player player_one, Player player_two)
+    private static void displayPlayerDetails(Player player_one, Player player_two, Score scoreObj)
     {
-        System.out.println("Player 1 : " + player_one.getName());
-        System.out.println("Player 2 : " + player_two.getName());
+        System.out.println("Player 1 : " + player_one.getName() + " Score: " + scoreObj.getScore(player_one));
+        System.out.println("Player 2 : " + player_two.getName() + " Score: " + scoreObj.getScore(player_two));
+        // System.out.println("Player 2 : " + player_two.getName());
+        // System.out.println("Score Player 1 : " + scoreObj.getScore(player_one)+", Score Player 2 : " + scoreObj.getScore(player_two));
     }
 
     public static void displayCommandPrompt()
     {
         System.out.print("Please enter command (\"HINT\" for command pallet): ");
     }
-    public static void displayPlayArea(Board boardObj, Player player_one, Player player_two)
+    public static void displayPlayArea(Board boardObj, Player player_one, Player player_two, Score score)
     {
-        displayPlayerDetails(player_one,player_two);
+        displayPlayerDetails(player_one,player_two,score);
         // viewBoard();
         displaySpikes(boardObj);
     }
