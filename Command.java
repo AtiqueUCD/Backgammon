@@ -219,6 +219,43 @@ public class Command extends Dice{
                     acceptCommand(testCommands.get(i++), boardObj, turnObj, playerOne, playerTwo);
                 }
             break;
+
+            case "doubleroll":
+                if (!getGameState()) {
+                    System.out.println(RED + "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
+                    break;
+                }
+                if (!turnObj.getTurnStatus() && !turnObj.getBlockedmove(playerOne, playerTwo)) {
+                    turnObj.setTurnInprogress();
+
+                    diceRoll = Dice.roll();
+
+                    if (diceRoll[0] == diceRoll[1]) { // Double roll case
+                        System.out.println("You rolled a double " + diceRoll[0] + "! You can make four moves.");
+                        for (int k = 0; k < 4; k++) {
+                            prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
+
+                            Scanner scanner = new Scanner(System.in);
+                            System.out.println("Select your move: ");
+                            int commandIndex = scanner.nextInt(); // Get player's move choice
+
+                            int source = moveList.get(commandIndex)[0];
+                            int dest = moveList.get(commandIndex)[1];
+                            moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo); // execute the move
+
+                            // update diceRoll values and game state based on the move
+                            updateGameStateAfterMove(source, dest, turnObj, playerOne, playerTwo); // thiis needs to be implemented
+                        }
+                    } else {
+                        prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
+                    }
+                    turnObj.displayTurn(playerOne, playerTwo);
+                } else {
+                    System.out.println(RED + "WARN:" + RESET + " Can't place a new roll, did not make the current move.");
+                }
+            break;
+
+
             default:
                 System.out.println(RED+ "WARN:" + RESET + " Invalid command!! Enter 'Hint' to see the command pallet.");
                 break;
@@ -231,6 +268,28 @@ public class Command extends Dice{
     {
         return diceRoll;
     }
+
+    private static void updateGameStateAfterMove(int source, int dest, Turn turnObj, Player playerOne, Player playerTwo) {
+    int moveDistance = Math.abs(dest - source);
+
+    // Update dice values based on the move distance
+    if (moveDistance == diceRoll[0]) {
+        diceRoll[0] = 0;
+    } else if (moveDistance == diceRoll[1]) {
+        diceRoll[1] = 0;
+    } else if (moveDistance == (diceRoll[0] + diceRoll[1])) {
+        diceRoll[0] = 0;
+        diceRoll[1] = 0;
+    }
+
+    // Check if both dice values are used
+    if (diceRoll[0] == 0 && diceRoll[1] == 0) {
+        turnObj.resetTurnInprogress();
+        turnObj.toggleTurn(playerOne, playerTwo); // Toggle to the next player's turn
+    }
+
+}
+
 
 
 
@@ -385,7 +444,7 @@ public class Command extends Dice{
 */
 
 
-    static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board) 
+    static public void prediction(int nd1, int nd2, boolean turnPlayer,Board board) 
     {
         String playerColor = (turnPlayer == true) ? Checker.RED : Checker.BLACK;
 
