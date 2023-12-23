@@ -82,13 +82,20 @@ public class Command extends Dice{
                     //No checkers are on the board
                     score.setScore(currentPLayer);  //increment the score of the winning player
                     
+                    //Match over
+                    System.out.println("Match over!!!");
+                    System.out.println("New match");
+                    System.out.println("Reseting the board...");
+
                     //Reset the board
                     boardObj.initializeBoard();
+                    
 
                     //Check if the score has reached the match length
                     if(score.compareMatchLength(currentPLayer))
                     {
                         System.out.println("Current player has won!!");
+                        System.out.println("Game over!!!");
                     }
                 }
    
@@ -169,6 +176,10 @@ public class Command extends Dice{
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
                     System.out.println("Need to get off the bar first");
+                    //Bug fix
+                    turnObj.setTurnInprogress();
+                    /* Roll the dice */
+                    diceRoll = roll();
                     //need to get of the bar
                     gettingOfBarPrediction(diceRoll[0],diceRoll[1], playerOne, playerTwo, turnObj, boardObj);
                 }
