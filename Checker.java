@@ -5,8 +5,9 @@ public class Checker {
     private String status; // Status of the checker
     private int ID; // ID of the checkers
 
-    public static final String RED = "\u001B[31m" + "\u25A0";
-    public static final String BLACK = "\u001B[30m" + "\u25A0";
+    public static final String RED = "\u001B[31m" + "■";
+    public static final String BLACK = "\u001B[30m" + "■";
+
     public static final String RESET = "\u001B[0m";
 
     public static final String ON = "ON_BOARD";
@@ -28,13 +29,12 @@ public class Checker {
         this.ID = ID;
     }
 
-    public int getID()
-    {
+    public int getID() {
         return ID;
     }
-    
+
     public String getColor() {
-        return (color+RESET);
+        return (color + RESET);
     }
 
     public int getPosition() {
@@ -45,11 +45,9 @@ public class Checker {
         this.position = position;
     }
 
-    public void moveChecker(int steps)
-    {
+    public void moveChecker(int steps) {
         int position = getPosition() + steps;
-        if(position <= TOTAL_SPIKES)
-        {
+        if (position <= TOTAL_SPIKES) {
             setPosition(position);
         }
     }

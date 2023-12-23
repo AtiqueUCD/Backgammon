@@ -97,66 +97,90 @@ public class Presenter {
         viewBoard();
     }
 
+    // public static void displaySpikes(Board obj) {
+    // for (int i = 0; i < 26; i++) {
+    // System.out.print(i + " ");
+    // if (i == 6 || i == 19) {
+    // System.out.print("BAR");
+    // }
+    // int totalNoCheckers = obj.getSpike(i).size();
+    // for (int j = 0; j < totalNoCheckers; j++) {
+    // // print the color
+    // System.out.print(obj.getSpike(i).get(j).getColor() + " ");
+    // }
+    // System.out.println("");
+    // }
+    // }
+    // --------------------------------------------------------------
+
     public static void displaySpikes(Board obj) {
-        // for(int i = 0; i < 26; i++)
-        // {
-        // System.out.print(i + " ");
-        // if(i == 6 || i == 19)
-        // {
-        // System.out.print("BAR");
-        // }
-        // int totalNoCheckers = obj.getSpike(i).size();
-        // for(int j = 0; j < totalNoCheckers; j++)
-        // {
-        // //print the color
-        // System.out.print(obj.getSpike(i).get(j).getColor() + " ");
-        // }
-        // System.out.println("");
-        // }
-
-        int itemsPerColumn = 13;
-        int total = 26;
-
-        for (int i = 0; i < itemsPerColumn; i++) {
-            int test = total - 1 - i;
-            if (i < 10) {
-                System.out.print(i + "   ");
-            } else {
-                System.out.print(i + "  ");
-            }
-
+        for (int i = 0; i < 12; i++) {
             int totalNoCheckers1 = obj.getSpike(i).size();
-            int totalNoCheckers2 = obj.getSpike(25 - i).size();
-            int temp = 50 - (4 * totalNoCheckers1);
-            // Print the items from the second column, if available
-            if (totalNoCheckers1 > 0) {
+            int totalNoCheckers2 = obj.getSpike(23 - i).size();
 
+            ArrayList<String> temp1 = new ArrayList<String>(); // Create a new ArrayList for each iteration
+            ArrayList<String> temp2 = new ArrayList<String>(); // Create a new ArrayList for each iteration
+
+            if (totalNoCheckers1 > 0) {
                 for (int j = 0; j < totalNoCheckers1; j++) {
                     // print the color
-                    System.out.printf(obj.getSpike(i).get(j).getColor() + " ");
+                    temp1.add(obj.getSpike(i).get(j).getColor() + "");
                 }
-
-            }
-            // System.out.print(obj.getSpike(i).size());
-            System.out.printf("%-" + temp + "s", "");
-
-            if (25 - i < total) {
-
-                if (totalNoCheckers2 > 0) {
-
-                    // System.out.printf("%50s", " ");
-                    for (int j = 0; j < totalNoCheckers2; j++) {
-                        // print the color
-                        System.out.printf(obj.getSpike(25 - i).get(j).getColor() + " ");
-                    }
-
-                }
-                System.out.print(" " + test);
-
             }
 
-            System.out.println();
+            if (totalNoCheckers2 > 0) {
+                for (int j = 0; j < totalNoCheckers2; j++) { // Use totalNoCheckers2 here
+                    // print the color
+                    temp2.add(obj.getSpike(23 - i).get(j).getColor() + "");
+                }
+            }
+
+            // Print ArrayList from the first column (index 1 to 13)
+            System.out.printf("%-2s: %-40s | %40s :%2s %n",
+                    (i), arrayListToString(temp1),
+                    arrayListToString(temp2), (23 - i)); // Print from 26 to 14 in the second column
         }
+    }
+
+    private static String arrayListToString(ArrayList<String> list) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            result.append(list.get(i).toString());
+            if (i < list.size() - 1) {
+                result.append(" ");
+            }
+        }
+        result.append("");
+
+        // Add ANSI escape codes for color formatting
+        result.insert(0, "\u001B[30m"); // Black color
+        result.append("\u001B[0m"); // Reset color
+
+        int visibleLength = getVisibleLength(result.toString());
+
+        // Add spaces to make the total visible length 60 characters
+        int spacesToAdd = Math.max(0, 40 - visibleLength);
+        for (int i = 0; i < spacesToAdd; i++) {
+            result.append(" ");
+        }
+        return result.toString();
+    }
+
+    private static int getVisibleLength(String str) {
+        boolean inEscapeCode = false;
+        int length = 0;
+
+        for (char ch : str.toCharArray()) {
+            if (ch == '\u001B') {
+                inEscapeCode = true;
+            } else if (inEscapeCode && ch == 'm') {
+                inEscapeCode = false;
+            } else if (!inEscapeCode) {
+                length++;
+            }
+        }
+
+        return length;
     }
 
     /* Not in use */
