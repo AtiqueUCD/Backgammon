@@ -1,4 +1,3 @@
-start
 dice12
 2
 dice22
