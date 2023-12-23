@@ -21,12 +21,14 @@ public class CheckerTest {
     }
 
     @Test
+    @DisplayName("Checks the position of checkers on the board is valid")
     void testGetPosition()
     {
         assertEquals(8, checker.getPosition());
     }
 
     @Test
+    @DisplayName("Checks wether the checker is on the board")
     void testStatus()
     {
         assertEquals("IN", checker.getStatus());

@@ -1,8 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.*;
+import java.util.ArrayList;
 
 public class PlayerTest {
     
@@ -37,6 +35,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Test the name has been assigned to the players.")
     void testName()
     {
         assertEquals("Sam Winchester", PlayerOne.getName());
@@ -44,6 +43,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Counts the checkers alloted to each player")
     void testNumCheckers()
     {
         assertEquals(100, PlayerOne.getNumCheckers());
@@ -51,6 +51,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Reads the scores of each player")
     void testScore()
     {
         assertEquals(70, PlayerOne.getScore());
@@ -58,6 +59,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Checks that both player should not have turn at the same time")
     void testTurnStatus()
     {
         assertEquals(true, PlayerOne.isTurn());
@@ -65,6 +67,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("This is a status bit which indicates wether the checker is killed.")
     void testBlockedMove()
     {
         assertEquals(true,PlayerOne.getmoveBlocked());
@@ -72,6 +75,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Properties of the player currently in play")
     void testTurnClass()
     {
         assertEquals(false,turn.getBlockedmove(PlayerOne, PlayerTwo));
@@ -80,6 +84,7 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("Tests the possible valid moves in the checker is on the bar")
     static void testOffBar()
     {
         ArrayList<int[]> temp = new ArrayList<>();
