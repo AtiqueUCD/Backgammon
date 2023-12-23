@@ -21,6 +21,20 @@ public class Turn {
         System.out.println("AT-> Toggling turn" + playerTurn);
     }
 
+    /*
+     * Returns the current player who is playing.
+     */
+    public Player getCurrentPlayer(Player player_one, Player player_two)
+    {
+        return getTurn() == true ? player_one : player_two;
+    }
+
+    public String getCurrentPlayerColor()
+    {
+        return getTurn() == true ? Checker.RED : Checker.BLACK;
+    }
+
+
     public boolean getTurn()
     {
         return playerTurn;

@@ -14,11 +14,11 @@ public class Command extends Dice{
     public static final String RED = "\u001B[31m";
     public static final String BLACK = "\u001B[30m";
 
-    public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo)
+    public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo, Score score)
     {
         boolean returnState = false;
         boolean playerTurn = turnObj.getTurn();
-        System.out.println(playerTurn);
+        //System.out.println(playerTurn);
 
         
         int d1 = 0;
@@ -45,8 +45,6 @@ public class Command extends Dice{
             // else{
             // moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo);//.getTurn());
             // }
-
-            int arr[] = new int[2];
             //perform move
             moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo);
             /*
@@ -71,10 +69,36 @@ public class Command extends Dice{
             }
             moveList.clear();
 
-            if(diceRoll[0]!=0 || diceRoll[1]!=0){
+            if(diceRoll[0] != 0 || diceRoll[1] != 0){
                 prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj);
             
             }else{
+                /*Check for the game over conditions */
+                Player currentPLayer = turnObj.getCurrentPlayer(playerOne, playerTwo);
+                
+                /*1. Check the non zero checker condition for the current player */
+                if(!boardObj.areCheckersOnBoard(turnObj.getCurrentPlayerColor()))
+                {
+                    //No checkers are on the board
+                    score.setScore(currentPLayer);  //increment the score of the winning player
+                    
+                    //Match over
+                    System.out.println("Match over!!!");
+                    System.out.println("New match");
+                    System.out.println("Reseting the board...");
+
+                    //Reset the board
+                    boardObj.initializeBoard();
+                    
+
+                    //Check if the score has reached the match length
+                    if(score.compareMatchLength(currentPLayer))
+                    {
+                        System.out.println("Current player has won!!");
+                        System.out.println("Game over!!!");
+                    }
+                }
+   
                 System.out.println("New roll!");
                 turnObj.resetTurnInprogress();
                 System.out.println("Toggle turn!!");
@@ -84,9 +108,9 @@ public class Command extends Dice{
             return true;
 
         }
+        
         if(command.length() > 4)
         {
-
             String tempString = command.substring(0, 4).toLowerCase();
             if(tempString.equals("dice"))
             {
@@ -134,6 +158,7 @@ public class Command extends Dice{
                     System.out.println(RED+ "WARN:" + RESET + " Can't place a new roll, did not made the current move.");
                 }
             break;
+
             case "r":
                 if(!getGameState())
                 {
@@ -151,6 +176,10 @@ public class Command extends Dice{
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
                     System.out.println("Need to get off the bar first");
+                    //Bug fix
+                    turnObj.setTurnInprogress();
+                    /* Roll the dice */
+                    diceRoll = roll();
                     //need to get of the bar
                     gettingOfBarPrediction(diceRoll[0],diceRoll[1], playerOne, playerTwo, turnObj, boardObj);
                 }
@@ -170,16 +199,18 @@ public class Command extends Dice{
                     System.out.println("3. Show to display the board");
                     System.out.println("4. Moves to show the possible moves");
                     System.out.println("5. Testrun to run command file");
+                    System.out.println("6. Matchlength to see the match length");
                 }else
                 {
                     System.out.println("3. Start to initiate the game");
                     System.out.println("4. Testrun to run command file");
+                    System.out.println("5. Matchlength to see the match length");
                 }
                 System.out.println("==============================");
             break;
 
             case "start":
-                Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
+                Presenter.displayPlayArea(boardObj,playerOne,playerTwo,score);
                 startGame();
                 turnObj.displayTurn(playerOne, playerTwo);
             break;
@@ -188,7 +219,7 @@ public class Command extends Dice{
                 if(getGameState())
                 {
                     turnObj.displayTurn(playerOne, playerTwo);
-                    Presenter.displayPlayArea(boardObj,playerOne,playerTwo);
+                    Presenter.displayPlayArea(boardObj,playerOne,playerTwo, score);
                 }else
                 {
                     System.out.println(RED+ "WARN:" + RESET + " Game is not yet started! Enter START to initiate the game.");
@@ -207,6 +238,10 @@ public class Command extends Dice{
                 }
             break;
             
+            case "matchlength":
+                System.out.println("Match length set is : " + score.getMatchLength());
+            break;
+
             case "testrun":
                 System.out.println("Enter the file name: ");
                 Scanner tempin = new Scanner(System.in);
@@ -216,7 +251,7 @@ public class Command extends Dice{
                 int i = 0;
                 while(TestCommandSize-- > 0)
                 {
-                    acceptCommand(testCommands.get(i++), boardObj, turnObj, playerOne, playerTwo);
+                    acceptCommand(testCommands.get(i++), boardObj, turnObj, playerOne, playerTwo, score);
                 }
             break;
             default:

@@ -10,6 +10,7 @@ public class Controller {
         Player playerTwo = new Player("Player 2");
         newBoard.initializeBoard();
         Turn playersTurn = new Turn();
+        Score newscore = new Score();
 
         //Presenter.displaySpikes(newBoard);
         Scanner in = new Scanner(System.in);
@@ -32,6 +33,14 @@ public class Controller {
                 break EXIT_PROGRAM;
             }
             playerTwo.setName(inputString + " " + Checker.BLACK);
+            System.out.print("Enter match length : ");
+            inputString = in.nextLine();
+            if(!checkQuitCommand(inputString))
+            {
+                //Exit program
+                break EXIT_PROGRAM;
+            }
+            newscore.setMatchength(Integer.parseInt(inputString));
 
             //Displays the play board
             // Presenter.displayPlayArea(newBoard,playerOne,playerTwo);
@@ -44,7 +53,7 @@ public class Controller {
             */
             while(!(command.equals("Q") || command.equals("q")))
             {
-                Command.acceptCommand(command,newBoard, playersTurn, playerOne, playerTwo);
+                Command.acceptCommand(command,newBoard, playersTurn, playerOne, playerTwo, newscore);
                 int[] temp = new int[2];
                 temp = Command.getDiceRoll();
                 System.out.println("1st Dice: " + temp[0]);
