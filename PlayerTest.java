@@ -1,11 +1,15 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.*;
 
 public class PlayerTest {
     
-    private Player PlayerOne;
-    private Player PlayerTwo;
-    private Turn turn;
+    private static Player PlayerOne;
+    private static Player PlayerTwo;
+    private static Turn turn;
+    private static Board board;
 
     @BeforeEach
     void setUp()
@@ -13,6 +17,10 @@ public class PlayerTest {
         PlayerOne = new Player("Sam Winchester");
         PlayerTwo = new Player("Dean Winchester");
         turn = new Turn();
+        board = new Board();
+
+        board.initializeBoard();
+
 
 
         PlayerOne.setNumCheckers(100);
@@ -69,5 +77,17 @@ public class PlayerTest {
         assertEquals(false,turn.getBlockedmove(PlayerOne, PlayerTwo));
         assertEquals(PlayerTwo,turn.getCurrentPlayer(PlayerOne, PlayerTwo));
         assertEquals(Checker.BLACK,turn.getCurrentPlayerColor());
+    }
+
+    @Test
+    static void testOffBar()
+    {
+        ArrayList<int[]> temp = new ArrayList<>();
+        ArrayList<int[]> checkTemp = new ArrayList<>();
+        checkTemp.add(new int[]{6,2});
+        checkTemp.add(new int[]{6,3});
+        Command.gettingOfBarPrediction(2,3,PlayerOne,PlayerTwo,turn,board);
+        temp = Command.getMoveList();
+        assertArrayEquals(checkTemp.get(0), temp.get(0));
     }
 }

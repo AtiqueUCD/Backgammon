@@ -14,6 +14,11 @@ public class Command extends Dice{
     public static final String RED = "\u001B[31m";
     public static final String BLACK = "\u001B[30m";
 
+    public static ArrayList<int[]> getMoveList()
+    {
+        return moveList;
+    }
+
     public static boolean acceptCommand(String command, Board boardObj, Turn turnObj, Player playerOne, Player playerTwo, Score score)
     {
         boolean returnState = false;
