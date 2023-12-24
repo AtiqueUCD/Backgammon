@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.lang.model.type.NullType;
-
 public class Board extends Spike{
 
     final static private int TOTAL_BAR_NUMBER = 2;
