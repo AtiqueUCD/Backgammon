@@ -23,6 +23,47 @@ public class Command extends Dice{
         
         int d1 = 0;
         int d2 = 0;
+
+
+        if (command.equalsIgnoreCase("r")|| command.startsWith("dice")){
+             diceRoll = Dice.roll();
+             if(command.equals("r")){
+             System.out.println("Dice rolled: " + diceRoll[0] + ", " + diceRoll[1]);}
+             else{
+                int dice1 = Character.getNumericValue(command.charAt(4));
+                int dice2 = Character.getNumericValue(command.charAt(5));
+                if (dice1 >= 1 && dice1 <= 6 && dice2 >= 1 && dice2 <= 6) {
+                    diceRoll[0] = dice1;
+                    diceRoll[1] = dice2;
+                    System.out.println("Dice rolled: " + diceRoll[0] + ", " + diceRoll[1]);}
+             }
+
+
+            // Handle double roll
+            if (diceRoll[0] == diceRoll[1]) {
+                System.out.println("You rolled a double " + diceRoll[0] + "! You can make four moves.");
+                for (int k = 0; k < 4; k++) {
+                    prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj, 1);
+
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("Select your move: ");
+                    int commandIndex = scanner.nextInt(); // Get player's move choice
+
+                    if (commandIndex >= 0 && commandIndex < moveList.size()) {
+                        int source = moveList.get(commandIndex)[0];
+                        int dest = moveList.get(commandIndex)[1];
+                        moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo);
+
+                        moveList.clear();
+                    } else {
+                        System.out.println("Invalid move selection. Please try again.");
+                        k--; // Decrement counter to retry the move
+                        continue;
+                    }
+                }
+                return true;
+            }
+        }
         
 
         if(command.matches("[0-9]+") && turnObj.getTurnStatus())
@@ -72,7 +113,7 @@ public class Command extends Dice{
             moveList.clear();
 
             if(diceRoll[0]!=0 || diceRoll[1]!=0){
-                prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj);
+                prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj, 1);
             
             }else{
                 System.out.println("New roll!");
@@ -113,7 +154,7 @@ public class Command extends Dice{
                     diceRoll[0] = d1;
                     diceRoll[1] = d2;
                     //Show possible moves
-                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
+                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj, 1);
                     // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
@@ -146,7 +187,7 @@ public class Command extends Dice{
                     /* Roll the dice */
                     diceRoll = roll();
                     //Show possible moves
-                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
+                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj,1);
                     // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
@@ -220,40 +261,40 @@ public class Command extends Dice{
                 }
             break;
 
-            case "doubleroll":
-                if (!getGameState()) {
-                    System.out.println(RED + "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
-                    break;
-                }
-                if (!turnObj.getTurnStatus() && !turnObj.getBlockedmove(playerOne, playerTwo)) {
-                    turnObj.setTurnInprogress();
+            // case "doubleroll":
+            //     if (!getGameState()) {
+            //         System.out.println(RED + "WARN:" + RESET + "Game is not yet started! Enter START to initiate the game.");
+            //         break;
+            //     }
+            //     if (!turnObj.getTurnStatus() && !turnObj.getBlockedmove(playerOne, playerTwo)) {
+            //         turnObj.setTurnInprogress();
 
-                    diceRoll = Dice.roll();
+            //         diceRoll = Dice.roll();
 
-                    if (diceRoll[0] == diceRoll[1]) { // Double roll case
-                        System.out.println("You rolled a double " + diceRoll[0] + "! You can make four moves.");
-                        for (int k = 0; k < 4; k++) {
-                            prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
+            //         if (diceRoll[0] == diceRoll[1]) { // Double roll case
+            //             System.out.println("You rolled a double " + diceRoll[0] + "! You can make four moves.");
+            //             for (int k = 0; k < 4; i++) {
+            //                 prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
 
-                            Scanner scanner = new Scanner(System.in);
-                            System.out.println("Select your move: ");
-                            int commandIndex = scanner.nextInt(); // Get player's move choice
+            //                 Scanner scanner = new Scanner(System.in);
+            //                 System.out.println("Select your move: ");
+            //                 int commandIndex = scanner.nextInt(); // Get player's move choice
 
-                            int source = moveList.get(commandIndex)[0];
-                            int dest = moveList.get(commandIndex)[1];
-                            moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo); // execute the move
+            //                 int source = moveList.get(commandIndex)[0];
+            //                 int dest = moveList.get(commandIndex)[1];
+            //                 moveChecker(source, dest, boardObj, turnObj, playerOne, playerTwo); // execute the move
 
-                            // update diceRoll values and game state based on the move
-                            updateGameStateAfterMove(source, dest, turnObj, playerOne, playerTwo); // thiis needs to be implemented
-                        }
-                    } else {
-                        prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
-                    }
-                    turnObj.displayTurn(playerOne, playerTwo);
-                } else {
-                    System.out.println(RED + "WARN:" + RESET + " Can't place a new roll, did not make the current move.");
-                }
-            break;
+            //                 // update diceRoll values and game state based on the move
+            //                 updateGameStateAfterMove(source, dest, turnObj, playerOne, playerTwo); // thiis needs to be implemented
+            //             }
+            //         } else {
+            //             prediction(diceRoll[0], diceRoll[1], turnObj.getTurn(), boardObj);
+            //         }
+            //         turnObj.displayTurn(playerOne, playerTwo);
+            //     } else {
+            //         System.out.println(RED + "WARN:" + RESET + " Can't place a new roll, did not make the current move.");
+            //     }
+            // break;
 
 
             default:
@@ -444,41 +485,62 @@ public class Command extends Dice{
 */
 
 
-    static public void prediction(int nd1, int nd2, boolean turnPlayer,Board board) 
-    {
+    static public void prediction(int nd1, int nd2, boolean turnPlayer, Board board, int movesAllowed) {
         String playerColor = (turnPlayer == true) ? Checker.RED : Checker.BLACK;
-
+        
         moveList.clear();
+        if(nd1==nd2){
+            for (int indexSpike = 0; indexSpike < 24; indexSpike++) {
+                Spike tempSpike = board.getSpike(indexSpike);
+                if (!tempSpike.isEmpty() && playerColor.equals(tempSpike.get(tempSpike.size() - 1).getColor())) {
+                    int source = indexSpike;
+                    int destination = turnPlayer ? source + nd1 : source - nd1;
 
-        for(int indexSpike = 0; indexSpike < 24; indexSpike++)
-        {
-            Spike temp = new Spike();
-            temp = board.getSpike(indexSpike);
-
-            if(!temp.isEmpty())
-            {
-
-                int indexCheckers = temp.size() - 1;
-                if(playerColor.equals(temp.getCheckers(indexCheckers).getColor()))
-                {
-                    int source = temp.getCheckers(indexCheckers).getPosition();
-
-                    if(nd1>0)
-                    {
-                        checkAndAddMove(moveList, source, nd1, board, playerColor, turnPlayer);
-                    }
-                    if(nd2>0){
-                        checkAndAddMove(moveList, source, nd2, board, playerColor, turnPlayer);}
-                    if( nd1!=0 && nd2!=0){
-                        checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor, turnPlayer);
-
+                    if (isValidMove(destination, board, playerColor) && !isDuplicateMove(source, destination)) {
+                        moveList.add(new int[]{source, destination});
                     }
                 }
-            }
-        }
+        }}else{
+
+            for(int indexSpike = 0; indexSpike < 24; indexSpike++)
+            {
+                Spike temp = new Spike();
+                temp = board.getSpike(indexSpike);
+
+                if(!temp.isEmpty())
+                {
+
+                    int indexCheckers = temp.size() - 1;
+                    if(playerColor.equals(temp.getCheckers(indexCheckers).getColor()))
+                    {
+                        int source = temp.getCheckers(indexCheckers).getPosition();
+
+                        if(nd1>0)
+                        {
+                            checkAndAddMove(moveList, source, nd1, board, playerColor, turnPlayer);
+                        }
+                        if(nd2>0){
+                            checkAndAddMove(moveList, source, nd2, board, playerColor, turnPlayer);}
+                        if( nd1!=0 && nd2!=0){
+                            checkAndAddMove(moveList, source, nd1 + nd2, board, playerColor, turnPlayer);
+
+                        }
+                    }
+                }
+            }}
 
         printMoves(moveList);
     }
+
+    static private boolean isDuplicateMove(int source, int destination) {
+    for (int[] move : moveList) {
+        if (move[0] == source && move[1] == destination) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
     static private void checkAndAddMove(List<int[]> moveList, int source, int steps, Board board, String playerColor, boolean playerTurn) {
     int dest = playerTurn ? source + steps : source - steps;
