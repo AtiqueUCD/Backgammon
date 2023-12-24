@@ -60,6 +60,9 @@ public class Command extends Dice{
                         k--; // Decrement counter to retry the move
                         continue;
                     }
+
+                    //display the board
+                    Presenter.displayPlayArea(boardObj, playerOne, playerTwo);
                 }
                 return true;
             }
