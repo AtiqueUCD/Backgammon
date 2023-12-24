@@ -9,3 +9,7 @@ Emile and Sanghar add the class flies and acknowladge this Entry.
 
 Entry by Atique, Date - 31-Oct-23
 merged Sangharsh class with board class. YTT.
+
+Fo compilation use the following command so that we exclude the JUnit test file, which is
+causing compilation error.
+Command :- javac $(find . -name '*.java' ! -name '*Test*' -print)
