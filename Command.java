@@ -67,7 +67,7 @@ public class Command extends Dice{
                     }
 
                     //display the board
-                    Presenter.displayPlayArea(boardObj, playerOne, playerTwo);
+                    Presenter.displayPlayArea(boardObj, playerOne, playerTwo,score);
                 }
                 return true;
             }
@@ -124,7 +124,7 @@ public class Command extends Dice{
                 {
                     gettingOfBarPrediction(diceRoll[0],diceRoll[1], playerOne, playerTwo, turnObj, boardObj);
                 }else{
-                    prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj);
+                    prediction(diceRoll[0], diceRoll[1], playerTurn, boardObj,1);
                 }
                 
 
@@ -231,7 +231,7 @@ public class Command extends Dice{
                     diceRoll = roll();
 
                     //Show possible moves
-                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj);
+                    prediction(diceRoll[0],diceRoll[1],playerTurn,boardObj,1);
                     // turnObj.toggleTurn(playerOne,playerTwo);
                     turnObj.displayTurn(playerOne, playerTwo);
                 }else if(!turnObj.getTurnStatus() && turnObj.getBlockedmove(playerOne, playerTwo)){
