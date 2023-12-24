@@ -204,12 +204,12 @@ public class Command extends Dice{
                     System.out.println("3. Show to display the board");
                     System.out.println("4. Moves to show the possible moves");
                     System.out.println("5. Testrun to run command file");
-                    System.out.println("99. Matchlength to see the match length");
+                    System.out.println("6. Matchlength to see the match length");
                 }else
                 {
                     System.out.println("3. Start to initiate the game");
                     System.out.println("4. Testrun to run command file");
-                    System.out.println("99. Matchlength to see the match length");
+                    System.out.println("5. Matchlength to see the match length");
                 }
                 System.out.println("==============================");
             break;
