@@ -3,11 +3,6 @@ import java.util.ArrayList;
 public class Spike extends ArrayList<Checker>{
     private int position;
 
-    // public Spike(String color, int position){
-    //     super();
-    //     this.position = position;
-    // }
-
     public int getPosition(){
         return position;
     }
