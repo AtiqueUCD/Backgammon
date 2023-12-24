@@ -75,20 +75,10 @@ public class Presenter {
         System.out.println("24   OFF");
     }
 
-    /*
-     * To be modified
-     */
-    public static void viewSpike(Board boardObj, int spikePosition) {
-        // System.out.println(boardObj.getSpike(spikePosition));
-        // viewBoard();
-    }
 
     private static void displayPlayerDetails(Player player_one, Player player_two, Score scoreObj) {
         System.out.println("Player 1 : " + player_one.getName() + " Score: " + scoreObj.getScore(player_one));
         System.out.println("Player 2 : " + player_two.getName() + " Score: " + scoreObj.getScore(player_two));
-        // System.out.println("Player 2 : " + player_two.getName());
-        // System.out.println("Score Player 1 : " + scoreObj.getScore(player_one)+",
-        // Score Player 2 : " + scoreObj.getScore(player_two));
     }
 
     public static void displayCommandPrompt() {
@@ -97,7 +87,6 @@ public class Presenter {
 
     public static void displayPlayArea(Board boardObj, Player player_one, Player player_two, Score score) {
         displayPlayerDetails(player_one, player_two, score);
-        // viewBoard();
         displaySpikes(boardObj);
     }
 
@@ -178,34 +167,24 @@ public class Presenter {
 
         boolean barEmptyStatus = obj.arrayForBar.get(0).isEmpty() || obj.arrayForBar.get(1).isEmpty();
 
-        if(barEmptyStatus == false)
+        if(barEmptyStatus == true)
         {
             // Display bar for now
+            System.out.print("Bar Black ("+Checker.BLACK+") :");
             for (int i = 0; i < obj.arrayForBar.get(0).size(); i++) {
-                System.out.print("Bar Black: "+Checker.BLACK);
-                System.out.println(obj.arrayForBar.get(0).get(i).getColor());
+                System.out.print(obj.arrayForBar.get(0).get(i).getColor() + " ");
             }
+            System.out.print("\nBar Red ("+Checker.RED+") :");
             for (int i = 0; i < obj.arrayForBar.get(1).size(); i++) {
-                System.out.print("Bar Red: "+Checker.RED);
-                System.out.println(obj.arrayForBar.get(1).get(i).getColor());
+                
+                System.out.print(obj.arrayForBar.get(1).get(i).getColor() + " ");
             } 
+            System.out.println("");
         }else
         {
             System.out.println("Bar Black (" + Checker.BLACK +"): "+ Command.RED + "Empty" + Command.RESET);
             System.out.println("Bar Red (" + Checker.RED + "): "+Command.RED + "Empty" + Command.RESET);
         }
-
-        /* 
-        // Display bar for now
-        for (int i = 0; i < obj.arrayForBar.get(0).size(); i++) {
-            System.out.println("Bar RED: ");
-            System.out.println(obj.arrayForBar.get(0).get(i).getColor());
-        }
-        for (int i = 0; i < obj.arrayForBar.get(1).size(); i++) {
-            System.out.println("Bar BLACK: ");
-            System.out.println(obj.arrayForBar.get(1).get(i).getColor());
-        }
-        */
     }
 
     private static String arrayListToString(ArrayList<String> list) {

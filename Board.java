@@ -94,10 +94,6 @@ public class Board extends Spike{
                     index++;
                 break;
 
-                // case BAR_SIPKE_FIRST_HALF:
-                // case BAR_SIPKE_SECOND_HALF:
-                //     System.out.println("Adding bar!");
-                //     break;
                 default:
                     tempIndex = 0;
                 break;
@@ -118,11 +114,6 @@ public class Board extends Spike{
 
             
         }
-        //Debug
-        // System.out.println("Total number of spikes:" + spikes.size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(0).size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(1).size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(2).size());
 
         //Initialize the bar
         arrayForBar.add(0,new Spike());//For player one

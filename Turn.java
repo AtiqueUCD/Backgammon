@@ -17,8 +17,6 @@ public class Turn {
 
         playerOne.setTurn(playerTurn);
         playerTwo.setTurn(!playerTurn);
-
-        System.out.println("AT-> Toggling turn" + playerTurn);
     }
 
     /*
@@ -65,14 +63,17 @@ public class Turn {
 
     public boolean getBlockedmove(Player playerOne, Player playerTwo)
     {
+        /*
         if(getTurn() == true)
         {
             return playerOne.getmoveBlocked();
         }
-        else //if(getTurn() == true)
+        else
         {
             return playerTwo.getmoveBlocked();
         }
+        */
+        return getCurrentPlayer(playerOne,playerTwo).getmoveBlocked();
     }
 
     public void setBlockedmove(Player playerOne, Player playerTwo)
@@ -81,7 +82,7 @@ public class Turn {
         {
             playerTwo.setMoveBlock();
         }
-        else //if(getTurn() == true)
+        else
         {
             playerOne.setMoveBlock();
         }
@@ -93,7 +94,7 @@ public class Turn {
         {
             playerOne.resetMoveBlock();
         }
-        else //if(getTurn() == true)
+        else
         {
             playerTwo.resetMoveBlock();
         }

@@ -11,7 +11,6 @@ public class Player {
         this.score=0;
         this.numCheckers = 15; // default value
         this.moveBlocked = false;
-        // this.turn=false;
     }
 
     public String getName() {
