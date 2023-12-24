@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.lang.model.type.NullType;
-
 public class Board extends Spike{
 
     final static private int TOTAL_BAR_NUMBER = 2;
@@ -96,10 +94,6 @@ public class Board extends Spike{
                     index++;
                 break;
 
-                // case BAR_SIPKE_FIRST_HALF:
-                // case BAR_SIPKE_SECOND_HALF:
-                //     System.out.println("Adding bar!");
-                //     break;
                 default:
                     tempIndex = 0;
                 break;
@@ -120,11 +114,6 @@ public class Board extends Spike{
 
             
         }
-        //Debug
-        // System.out.println("Total number of spikes:" + spikes.size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(0).size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(1).size());
-        // System.out.println("No of checkers in 1st spike: "+ spikes.get(2).size());
 
         //Initialize the bar
         arrayForBar.add(0,new Spike());//For player one
@@ -133,6 +122,7 @@ public class Board extends Spike{
 
     public void initializeBoard()
     {
+        spikes.clear();
         initializeSpikes();
     }
 
@@ -166,6 +156,7 @@ public class Board extends Spike{
 
         return size;
     }
+
     /*
      * killed black checkers go to bar[0]
      * killed red checkers go to bar[1]
@@ -197,5 +188,42 @@ public class Board extends Spike{
         }
 
         return tempChecker;
+    }
+
+    /*
+     * Gets the total checker count of a perticular color on the board
+     */
+    public int getCheckerCount(String color)
+    {
+        int spike = 0;
+        int count = 0;
+
+        for(spike = 0; spike < 24; spike++)
+        {
+            Spike tempSpike = getSpike(spike);
+            if(tempSpike.isEmpty())
+            {
+                continue;
+            }
+            boolean compare = color.equals(tempSpike.getCheckers(tempSpike.size()-1).getColor());
+            if(compare == true)
+            {
+                count += tempSpike.size();
+            }
+        }
+        return count;
+    }
+
+    /*
+     * Returns true is there are checkers on the board, else returns false
+     */
+    public boolean areCheckersOnBoard(String color)
+    {
+        if(getCheckerCount(color) > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
