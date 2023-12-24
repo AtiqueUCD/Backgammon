@@ -176,6 +176,26 @@ public class Presenter {
 
         }
 
+        boolean barEmptyStatus = obj.arrayForBar.get(0).isEmpty() || obj.arrayForBar.get(1).isEmpty();
+
+        if(barEmptyStatus == false)
+        {
+            // Display bar for now
+            for (int i = 0; i < obj.arrayForBar.get(0).size(); i++) {
+                System.out.print("Bar Black: "+Checker.BLACK);
+                System.out.println(obj.arrayForBar.get(0).get(i).getColor());
+            }
+            for (int i = 0; i < obj.arrayForBar.get(1).size(); i++) {
+                System.out.print("Bar Red: "+Checker.RED);
+                System.out.println(obj.arrayForBar.get(1).get(i).getColor());
+            } 
+        }else
+        {
+            System.out.println("Bar Black (" + Checker.BLACK +"): "+ Command.RED + "Empty" + Command.RESET);
+            System.out.println("Bar Red (" + Checker.RED + "): "+Command.RED + "Empty" + Command.RESET);
+        }
+
+        /* 
         // Display bar for now
         for (int i = 0; i < obj.arrayForBar.get(0).size(); i++) {
             System.out.println("Bar RED: ");
@@ -185,6 +205,7 @@ public class Presenter {
             System.out.println("Bar BLACK: ");
             System.out.println(obj.arrayForBar.get(1).get(i).getColor());
         }
+        */
     }
 
     private static String arrayListToString(ArrayList<String> list) {
